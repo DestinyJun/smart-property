@@ -591,7 +591,7 @@ export class BfOwnerComponent implements OnInit {
           }
           if (this.ownerinfo.normalPaymentStatus !== null)  {
             this.normalChargeOption.forEach(val => {
-              if (this.ownerinfo.normalPaymentStatus=== val.label) {
+              if (this.ownerinfo.normalPaymentStatus === val.label) {
                 this.ownerinfo.normalPaymentStatus = val.value;
               }
             });
@@ -609,7 +609,6 @@ export class BfOwnerComponent implements OnInit {
           this.ownerRoomAdd.startBillingTime = this.datePipe.transform(this.ownerRoomAdd.startBillingTime, 'yyyy-MM-dd');
           this.ownerRoomAdd.roomCode = this.ownerRoomAdd.roomCode.slice(this.ownerRoomAdd.roomCode.lastIndexOf('-') + 1, this.ownerRoomAdd.roomCode.length);
           console.log(this.ownerRoomAdd.roomCode);
-
           this.ownerAdd.push(this.ownerRoomAdd);
           console.log(this.ownerAdd);
           this.owerSrv.addSingleOwerInfo({data: this.ownerAdd}).subscribe(
@@ -645,8 +644,9 @@ export class BfOwnerComponent implements OnInit {
       header: '修改提醒',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.ownerList.length === 0 ) {
           console.log(this.roomTitle);
+          // if (this.ownerinfo)
+          this.roomTitle.roomCode = this.roomTitle.roomCode.slice(this.roomTitle.roomCode.lastIndexOf('-') + 1, this.roomTitle.roomCode.length);
           this.owerSrv.addRoomCodeInfo(this.roomTitle).subscribe(
             value => {
               console.log(value);
@@ -660,12 +660,6 @@ export class BfOwnerComponent implements OnInit {
               }
             }
           );
-        } else {
-          this.ownerModifayDialog = false;
-          this.clearData();
-          this.ownerInitialization();
-          this.setToast('success', '操作成功', '操作成功');
-        }
         // this.msgs = [{severity:'info', summary:'Confirmed', detail:'You have accepted'}];
       },
       reject: () => {

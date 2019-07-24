@@ -18,14 +18,14 @@ const routes: Routes = [
     component: ChargemanComponent,
     children: [
       {path: 'details', component: ChargeDetailsComponent},
-      {path: 'record', component: ChargeRecordComponent},
+      // {path: 'record', component: ChargeRecordComponent},
       {path: 'export', component: ChargeExportComponent},
-      {path: 'margin', component: ChargeMarginComponent},
+      // {path: 'margin', component: ChargeMarginComponent},
       {path: 'payment', component: ChargemanPaymentComponent},
-      {path: 'arrears', component: ChargeArrearsComponent},
+      // {path: 'arrears', component: ChargeArrearsComponent},
       {path: 'prepayment', component: ChargePrepaymentComponent},
       {path: 'historicalreport', component: ChargeHistoricalreportComponent},
-      {path: 'coupon', component: ChargeCouponComponent},
+      // {path: 'coupon', component: ChargeCouponComponent},
       {path: 'parkspace', component: ChargeParkspaceComponent},
     ]
   }

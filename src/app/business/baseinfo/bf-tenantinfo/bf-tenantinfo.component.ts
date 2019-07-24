@@ -644,7 +644,6 @@ export class BfTenantinfoComponent implements OnInit {
       header: '增加提醒',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.tenantList.length === 0 ) {
           this.roomTitle.roomCode = this.roomTitle.roomCode.slice(this.roomTitle.roomCode.lastIndexOf('-') + 1, this.roomTitle.roomCode.length);
           this.tenantSrv.addRoomCodeInfo(this.roomTitle).subscribe(
             value => {
@@ -659,12 +658,6 @@ export class BfTenantinfoComponent implements OnInit {
               }
             }
           );
-        } else {
-          this.tenantModifayDialog = false;
-          this.clearData();
-          this.tenantInitialization();
-          this.setToast('success', '操作成功', '操作成功');
-        }
       },
       reject: () => {
       }

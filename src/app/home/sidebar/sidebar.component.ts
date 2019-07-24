@@ -102,10 +102,9 @@ export class SidebarComponent implements OnInit , OnChanges, AfterViewInit {
       this.localSrv.getObject('item').forEach(v => {
         this.ItemData.forEach( h => {
           if (v.title === h.title) {
-            this.items = [];
+
             this.homeSrv.getChildrenRouter({parentCode: v.permisCode}).subscribe(
               (value) => {
-                console.log(value);
                 value.data.forEach( data => {
                   h.routingItem.forEach( val => {
                     if (val.label === data.title) {
@@ -158,31 +157,41 @@ export class SidebarComponent implements OnInit , OnChanges, AfterViewInit {
 
   // View route activation
   public  sidebarRouterStatus(url): void {
+
     let position = 0;
-    this.items.map((prop) => {
-      position = position + 1;
-      console.log(prop.routerLink.toString().split('/', 4)[3].indexOf(url));
-      // console.log(prop.routerLink.toString().split("/",4)[3]);
-      if (prop.routerLink.toString().split('/', 4)[3].indexOf(url) === 0) {
-        // console.log(prop);
-        const li = document.getElementsByClassName('ui-panelmenu-header-link');
-        // @ts-ignore
-        li[position - 1].style.color = '#3A7ADF';
-        for (let i = position; i < li.length; i++) {
-          // @ts-ignore
-          li[i].style.color = '#8F9198';
-        }
-        for (let i = 0; i < position - 1; i++) {
-          // @ts-ignore
-          li[i].style.color = '#8F9198';
-        }
+    // const setPosition = setInterval( () => {
+      if (this.items.length > 0) {
+        this.items.map((prop) => {
+          position = position + 1;
+          // console.log(prop.routerLink.toString().split('/', 4)[3].indexOf(url));
+          // console.log(prop.routerLink.toString().split("/",4)[3]);
+          if (prop.routerLink.toString().split('/', 4)[3].indexOf(url) === 0) {
+            // console.log(prop);
+            console.log(url);
+
+            const li = document.getElementsByClassName('ui-panelmenu-header-link');
+            // @ts-ignore
+            li[position - 1].style.color = '#3A7ADF';
+            for (let i = position; i < li.length; i++) {
+              // @ts-ignore
+              li[i].style.color = '#8F9198';
+            }
+            for (let i = 0; i < position - 1; i++) {
+              // @ts-ignore
+              li[i].style.color = '#8F9198';
+            }
+            // clearInterval(setPosition);
+          }
+        });
       }
-    });
+    // }, 500);
     // console.log(position);
   }
   // Listening to the parent component
   ngOnChanges(changes: SimpleChanges): void {
-   const setBar = setInterval( () => {
+    console.log(this.flag);
+    this.items = [];
+    const setBar = setInterval( () => {
      if (this.ItemData[0].item.length > 0) {
        this.ItemData.forEach( v => {
          if (this.data === v.title) {
@@ -191,17 +200,17 @@ export class SidebarComponent implements OnInit , OnChanges, AfterViewInit {
          }
        });
      }
-    }, 500);
+    }, 50);
   }
   // View rendering
   ngAfterViewInit(): void {
     this.url = this.location.path().split('/', 4)[3];
+    console.log(this.url);
     this.sidebarRouterStatus(this.url);
     // 定略获取路由
     this.router.events.subscribe(
       (event) => {
         if (event instanceof NavigationEnd) {
-          // console.log(event);
           this.url = event.url.split('/', 4)[3];
           this.sidebarRouterStatus(this.url);
           /* titleSrv.setTitle(title[event.urlAfterRedirects]);*/

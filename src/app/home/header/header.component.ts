@@ -54,14 +54,12 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.headerSrv.getUserInfo().subscribe(
       value => {
-        console.log(value);
         if (value.status === '1000') {
           this.username = value.data.username;
         }
       }
     );
     this.localSrv.getObject('item').forEach( v => {
-      // console.log(v);
       this.items.forEach( data => {
         if (v.title === data.title) {
           this.item.push(data);
@@ -69,7 +67,6 @@ export class HeaderComponent implements OnInit {
         }
       });
     });
-
     // console.log(this.sidBarItem);
     this.url = this.location.path().split('/', 3)[2];
     this.UrlActivateStatus(this.url);
@@ -113,10 +110,9 @@ export class HeaderComponent implements OnInit {
     }
 
   }
-
   // 头部导航点击事件
-  public spanBarClick(e): void {
-
+  public spanBarClick(e, index): void {
+    this.router.navigate([this.item[index].router]);
     // @ts-ignore
     for (let i = 0; i < this.headerbar.nativeElement.children.length; i++) {
       // @ts-ignore
@@ -145,16 +141,21 @@ export class HeaderComponent implements OnInit {
     this.hiddenSidBar.emit(this.barHidden);
     e.path[0].style.color = '#3A7ADF';
   }
-
   // 查看路由激活
   public UrlActivateStatus(url): void {
     // console.log(url);
+    // const setTime = setInterval( () => {
+    //   if (this.item.length > 0) {
+    //   }
+    // }, 500);
     this.item.map((prop) => {
       if (prop.router.split('/', 3)[2].indexOf(url) === 0) {
         prop.color = '#3A7ADF';
         this.sidbarSetData(prop.title);
+        // clearInterval(setTime);
       }
     });
+
   }
 
   // 设置侧边导航数据

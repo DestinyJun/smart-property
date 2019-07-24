@@ -23,11 +23,9 @@ export class HomeComponent implements OnInit {
     if (this.route.snapshot.children[0].url[0].path === 'main') {
       this.sidbarHidden = true;
     }
-
   }
   // sidebar Hidden display
   public homeHiddenSidebar(e): void {
-
     this.sidbarHidden = e;
   }
 
