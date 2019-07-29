@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 3600",
-    "build": "ng build  --prod --base-href /SmartProperty/",
-    "buildHome": "ng build  --prod --base-href /SmartHome/",
+    "build": "ng build  --prod --base-href /SmartHome/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
