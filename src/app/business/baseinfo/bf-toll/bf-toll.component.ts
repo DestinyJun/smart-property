@@ -11,7 +11,7 @@ import {validate} from 'codelyzer/walkerFactory/walkerFn';
 })
 export class BfTollComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public tollTableTitle: any;
   public tollTableContent: Toll[];
   public tollTableTitleStyle: any;

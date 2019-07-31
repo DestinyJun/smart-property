@@ -13,7 +13,7 @@ import {BfRoomBindChargeitemService} from '../../../common/services/bf-room-bind
 export class BfRoombindChangeitemComponent implements OnInit {
 
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   // @ViewChild('file') file: Input;
   public roombindTableTitle: any;
   public roombindTableContent: any[];

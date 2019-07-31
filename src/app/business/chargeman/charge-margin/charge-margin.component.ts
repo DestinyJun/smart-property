@@ -8,7 +8,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 })
 export class ChargeMarginComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public marginTableTitle: any;
   public marginTableContent: any;
   public marginTableTitleStyle: any;

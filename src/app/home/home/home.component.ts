@@ -9,7 +9,7 @@ import {LocalStorageService} from '../../common/services/local-storage.service';
   styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild('mainStyle') mainStyle: Element;
+  @ViewChild('mainStyle', {static: true}) mainStyle: Element;
   public sidbarHidden: boolean;
   public sidbarItem: any;
   public sidbarData: any;

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {ConfirmDialogModule} from 'primeng/primeng';
-import {LoginService} from '../services/login.service';
 import {GlobalService} from '../services/global.service';
-import {elementDef} from '@angular/core/src/view';
 
 @Injectable({
   providedIn: 'root'
@@ -61,13 +58,13 @@ export class PublicMethedService {
    * @param parameter (Request parameter)
    * @param callback
    */
-  public  getNativeStatus(parameter, success: (...args: any[]) => any): void {
+  public  getNativeStatus(parameter, callback: (...args: any[]) => any): void {
     this.globalSrv.queryNativeStatus({settingType: parameter}).subscribe(
       value => {
         if (value.status === '1000') {
-          success(value.data);
+          callback(value.data);
         } else {
-          success(false);
+          callback(false);
         }
       }
     );

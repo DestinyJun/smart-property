@@ -12,7 +12,7 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
 export class RefundAlreadyComponent implements OnInit {
 
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public alreadyTableTitle: any;
   public alreadyTableContent: any[];
   public alreadyTableTitleStyle: any;

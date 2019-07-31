@@ -3,7 +3,6 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 import {AddBuildinginfo, Buildinginfo, ModifyBuildinginfo} from '../../../common/model/bf-buildinginfo.model';
 import {BfBuildinginfoService} from '../../../common/services/bf-buildinginfo.service';
 import {GlobalService} from '../../../common/services/global.service';
-import {ModifyBfParcelinfo} from '../../../common/model/bf-parcelinfo.model';
 
 @Component({
   selector: 'rbi-bf-buildinginfo',
@@ -11,7 +10,7 @@ import {ModifyBfParcelinfo} from '../../../common/model/bf-parcelinfo.model';
   styleUrls: ['./bf-buildinginfo.component.less']
 })
 export class BfBuildinginfoComponent implements OnInit {
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public buildinginfoTableTitle: any;
   public buildinginfoTableContent: Buildinginfo[];
   public buildinginfoTableTitleStyle: any;

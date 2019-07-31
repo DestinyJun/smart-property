@@ -13,13 +13,13 @@ import {Dropdown} from 'primeng/primeng';
 })
 export class BfCouponComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
-  @ViewChild('addcouponType') addcouponType: Dropdown;
-  @ViewChild('addChargeCode') addChargeCode: Dropdown;
-  @ViewChild('addEffectiveTime') addEffectiveTime: Dropdown;
-  @ViewChild('modifyeffectiveTime') modifyeffectiveTime: Dropdown;
-  @ViewChild('modifycouponType') modifycouponType: Dropdown;
-  @ViewChild('modifyChargeCode') modifychargeCode: Dropdown;
+  @ViewChild('input', {static: true}) input: Input;
+  @ViewChild('addcouponType', {static: true}) addcouponType: Dropdown;
+  @ViewChild('addChargeCode', {static: true}) addChargeCode: Dropdown;
+  @ViewChild('addEffectiveTime', {static: true}) addEffectiveTime: Dropdown;
+  @ViewChild('modifyeffectiveTime', {static: true}) modifyeffectiveTime: Dropdown;
+  @ViewChild('modifycouponType', {static: true}) modifycouponType: Dropdown;
+  @ViewChild('modifyChargeCode', {static: true}) modifychargeCode: Dropdown;
   // @ViewChild('file') file: Input;
   public couponTableTitle: any;
   public couponTableContent: Coupon[];

@@ -12,7 +12,7 @@ import {BfTenantinfoService} from '../../../common/services/bf-tenantinfo.servic
   styleUrls: ['./bf-tenantinfo.component.less']
 })
 export class BfTenantinfoComponent implements OnInit {
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   // @ViewChild('file') file: Input;
   public tenantTableTitle: any;
   public tenantTableContent: Tenant[];

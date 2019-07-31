@@ -9,7 +9,7 @@ import {Workgroup} from '../../../common/model/bf-workgroup.model';
 })
 export class BfWorkgroupComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public workgroupTableTitle: any;
   public workgroupTableContent: Workgroup[];
   public workgroupTableTitleStyle: any;

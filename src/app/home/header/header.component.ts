@@ -14,8 +14,8 @@ import {PublicMethedService} from '../../common/public/public-methed.service';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild('headerbar') public headerbar: Element;
-  @ViewChild('titlebar') public titlebar: Element;
+  @ViewChild('headerbar', {static: true}) public headerbar: Element;
+  @ViewChild('titlebar', {static: true}) public titlebar: Element;
   @Output('hiddenSidBar')
   public hiddenSidBar = new EventEmitter();
   @Output('sidBarData')

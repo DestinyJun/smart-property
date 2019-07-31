@@ -9,7 +9,7 @@ import {BfParcelinfoService} from '../../../common/services/bf-parcelinfo.servic
   styleUrls: ['./bf-parcelinfo.component.less']
 })
 export class BfParcelinfoComponent implements OnInit {
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public parcelinfoTableTitle: any;
   public parcelinfoTableContent: BfParcelinfo[];
   public parcelinfoTableTitleStyle: any;

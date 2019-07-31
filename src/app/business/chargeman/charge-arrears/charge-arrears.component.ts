@@ -9,7 +9,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 export class ChargeArrearsComponent implements OnInit {
 
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public arrearsTableTitle: any;
   public arrearsTableContent: any;
   public arrearsTableTitleStyle: any;

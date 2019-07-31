@@ -10,7 +10,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 export class BfProjectinfoComponent implements OnInit {
 
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public projectinfoTableTitle: any;
   public projectinfoTableContent: any;
   public projectinfoTableTitleStyle: any;

@@ -13,8 +13,8 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
   styleUrls: ['./set-config.component.less']
 })
 export class SetConfigComponent implements OnInit {
-  @ViewChild('addSetType') addSetType: Dropdown;
-  @ViewChild('input') input: Input;
+  @ViewChild('addSetType', {static: true}) addSetType: Dropdown;
+  @ViewChild('input', {static: true}) input: Input;
   public configTableTitle: any;
   public configTableContent: SetConfig[];
   public configTableTitleStyle: any;

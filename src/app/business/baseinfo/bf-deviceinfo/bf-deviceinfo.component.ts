@@ -9,7 +9,7 @@ import {ConfirmationService, MessageService} from 'primeng/api';
 })
 export class BfDeviceinfoComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public deviceinfoTableTitle: any;
   public deviceinfoTableContent: any;
   public deviceinfoTableTitleStyle: any;

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {forEach} from '@angular/router/src/utils/collection';
 import {ChargePaymentService} from '../../../common/services/charge-payment.service';
 import {
   ChargeItem,
@@ -21,7 +20,7 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
 })
 export class ChargemanPaymentComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public paymentTableTitle = [
     {field: 'id', header: '序号'},
     {field: 'roomCode', header: '房间号'},

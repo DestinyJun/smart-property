@@ -84,7 +84,7 @@
           <label > 优惠卷类型：</label>
         </div>
         <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px" #addcouponType   [options]="couponTypeData" placeholder="请选择优惠类型.." (onChange)="couponTypeChange($event)"></p-dropdown>
+          <p-dropdown scrollHeight="100px" addcouponType   [options]="couponTypeData" placeholder="请选择优惠类型.." (onChange)="couponTypeChange($event)"></p-dropdown>
         </div>
       </div>
       <div class="ui-g-6">
@@ -92,7 +92,7 @@
           <label >收费项目：</label>
         </div>
         <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px" #addChargeCode [options]="ChargeCodeData"  placeholder="请选择收费项目.."  (onChange)="chargeCodeChange($event)"></p-dropdown>
+          <p-dropdown scrollHeight="100px" addChargeCode [options]="ChargeCodeData"  placeholder="请选择收费项目.."  (onChange)="chargeCodeChange($event)"></p-dropdown>
         </div>
       </div>
       <div class="ui-g-6">

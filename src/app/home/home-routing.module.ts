@@ -8,14 +8,14 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      {path: 'main', loadChildren: '../business/main/main.module#MainModule'},
-      {path: 'baseinfo', loadChildren: '../business/baseinfo/baseinfo.module#BaseinfoModule'},
-      {path: 'charge', loadChildren: '../business/chargeman/chargeman.module#ChargemanModule'},
-      {path: 'assoc', loadChildren: '../business/association/association.module#AssociationModule'},
-      {path: 'monitor', loadChildren: '../business/monitor/monitor.module#MonitorModule'},
-      {path: 'system', loadChildren: '../business/systemset/systemset.module#SystemsetModule'},
-      {path: 'coupon', loadChildren: '../business/coupon/coupon.module#CouponModule'},
-      {path: 'refund', loadChildren: '../business/refund/refund.module#RefundModule'},
+      {path: 'main', loadChildren: () => import('../business/main/main.module').then(m => m.MainModule)},
+      {path: 'baseinfo', loadChildren: () => import('../business/baseinfo/baseinfo.module').then(m => m.BaseinfoModule)},
+      {path: 'charge', loadChildren: () => import('../business/chargeman/chargeman.module').then(m => m.ChargemanModule)},
+      {path: 'assoc', loadChildren: () => import('../business/association/association.module').then(m => m.AssociationModule)},
+      {path: 'monitor', loadChildren: () => import('../business/monitor/monitor.module').then(m => m.MonitorModule)},
+      {path: 'system', loadChildren: () => import('../business/systemset/systemset.module').then(m => m.SystemsetModule)},
+      {path: 'coupon', loadChildren: () => import('../business/coupon/coupon.module').then(m => m.CouponModule)},
+      {path: 'refund', loadChildren: () => import('../business/refund/refund.module').then(m => m.RefundModule)},
      ]
   }
 ];

@@ -13,9 +13,7 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
 })
 export class SetPartComponent implements OnInit {
 
-
-  // @ViewChild('addSetType') addSetType: Dropdown;
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public partTableTitle: any;
   public partTableContent: SetPart[];
   public partTableTitleStyle: any;

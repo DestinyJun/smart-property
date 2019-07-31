@@ -13,9 +13,7 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
 })
 export class CouponPendingReviewComponent implements OnInit {
 
-
-
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   // @ViewChild('file') file: Input;
   public couponPendingReviewTableTitle: any;
   public couponPendingReviewTableContent: CouponPendingReview[] = [];

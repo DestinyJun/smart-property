@@ -8,7 +8,7 @@ import {PersionalComponent} from './persional/persional.component';
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
-  {path: 'home', loadChildren: './home/home.module#HomeModule', canActivate: [LoginGuard]},
+  {path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule), canActivate: [LoginGuard]},
   {path: 'error', component: ErrorComponent},
   {path: 'persion', component: PersionalComponent},
   {path: '**', component: ErrorComponent},  // fallback router must in the last

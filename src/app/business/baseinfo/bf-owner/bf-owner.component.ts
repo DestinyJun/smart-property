@@ -14,7 +14,7 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
 })
 export class BfOwnerComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   // @ViewChild('file') file: Input;
   public ownerTableTitle: any;
   public ownerTableContent: Owner[];

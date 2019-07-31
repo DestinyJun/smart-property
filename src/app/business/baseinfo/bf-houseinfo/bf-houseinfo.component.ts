@@ -11,7 +11,7 @@ import {BfHouseinfoService} from '../../../common/services/bf-houseinfo.service'
 })
 export class BfHouseinfoComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public houseinfoTableTitle: any;
   public houseinfoTableContent: Houseinfo[];
   public houseinfoTableTitleStyle: any;

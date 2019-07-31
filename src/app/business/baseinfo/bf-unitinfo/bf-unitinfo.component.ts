@@ -9,7 +9,7 @@ import {BfUnitinfoService} from '../../../common/services/bf-unitinfo.service';
   styleUrls: ['./bf-unitinfo.component.less']
 })
 export class BfUnitinfoComponent implements OnInit {
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public  unitinfoTableTitle: any;
   public  unitinfoTableContent: Unitinfo[];
   public  unitinfoTableTitleStyle: any;

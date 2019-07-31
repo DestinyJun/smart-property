@@ -13,7 +13,7 @@ import {last} from 'rxjs/operators';
 })
 export class BfStaffComponent implements OnInit {
 
-  @ViewChild('input') input: Input;
+  @ViewChild('input', {static: true}) input: Input;
   public staffTableTitle: any;
   public staffTableContent: Staff[];
   public staffTableTitleStyle: any;

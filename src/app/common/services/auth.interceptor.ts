@@ -2,17 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, mergeMap, tap} from 'rxjs/operators';
-import {GlobalService} from './global.service';
+import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {LoginoutService} from './loginout.service';
 import {LocalStorageService} from './local-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   public clonedRequest: any;
   constructor(
-    private globalService: GlobalService,
     private router: Router,
     private localSessionStorage: LocalStorageService,
   ) {}
