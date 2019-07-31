@@ -48,11 +48,9 @@ export class LoginComponent implements OnInit{
   }
   // Login request
   public  login(userName, passWord): void {
-
     this.loginSrv.login({username: userName, password: passWord , module: 'CLOUD_HOUSE_WEB'}).subscribe(
       (value) => {
         this.loadHidden = true;
-        console.log(12);
 
         if (value.status === '1000') {
           this.item = [];
