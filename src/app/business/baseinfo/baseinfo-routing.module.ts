@@ -4,15 +4,8 @@ import {BaseinfoComponent} from './baseinfo/baseinfo.component';
 import {BfTollComponent} from './bf-toll/bf-toll.component';
 import {BfOwnerComponent} from './bf-owner/bf-owner.component';
 import {BfVehicleComponent} from './bf-vehicle/bf-vehicle.component';
-import {BfWorkgroupComponent} from './bf-workgroup/bf-workgroup.component';
 import {BfStaffComponent} from './bf-staff/bf-staff.component';
-import {BfDeviceinfoComponent} from './bf-deviceinfo/bf-deviceinfo.component';
-import {BfProjectinfoComponent} from './bf-projectinfo/bf-projectinfo.component';
-import {BfQrcodeComponent} from './bf-qrcode/bf-qrcode.component';
-import {BfParcelinfoComponent} from './bf-parcelinfo/bf-parcelinfo.component';
-import {BfUnitinfoComponent} from './bf-unitinfo/bf-unitinfo.component';
-import {BfBuildinginfoComponent} from './bf-buildinginfo/bf-buildinginfo.component';
-import {BfHouseinfoComponent} from './bf-houseinfo/bf-houseinfo.component';
+
 import {BfTenantinfoComponent} from './bf-tenantinfo/bf-tenantinfo.component';
 import {BfParkingspaceComponent} from './bf-parkingspace/bf-parkingspace.component';
 import {CouponComponent} from '../coupon/coupon/coupon.component';

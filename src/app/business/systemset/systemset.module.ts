@@ -3,9 +3,6 @@ import {CommonModule, DatePipe} from '@angular/common';
 
 import { SystemsetRoutingModule } from './systemset-routing.module';
 import { SystemsetComponent } from './systemset/systemset.component';
-import { SetCarkindComponent } from './set-carkind/set-carkind.component';
-import { SetCarbrandComponent } from './set-carbrand/set-carbrand.component';
-import { SetNationComponent } from './set-nation/set-nation.component';
 import { SetConfigComponent } from './set-config/set-config.component';
 import {ConfirmationService, MessageService, TreeNode} from 'primeng/api';
 import {MessageModule} from 'primeng/message';
@@ -35,9 +32,6 @@ import {PublicMethedService} from '../../common/public/public-methed.service';
 @NgModule({
   declarations: [
     SystemsetComponent,
-    SetCarkindComponent,
-    SetCarbrandComponent,
-    SetNationComponent,
     SetConfigComponent,
     SetPermissionComponent,
     SetRoleComponent,
