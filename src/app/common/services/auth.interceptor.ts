@@ -22,8 +22,8 @@ export class AuthInterceptor implements HttpInterceptor {
     }
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // console.log('挤进来哦了');
-    if (req.url === '/login') {
+    if (req.url === environment.loginUrl + '/login') {
+
       this.clonedRequest = req.clone({
         url: req.url,
         headers: req.headers
@@ -77,7 +77,7 @@ export class AuthInterceptor implements HttpInterceptor {
       );
   }
    public prod_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-     if (req.url === '/login') {
+     if (req.url === environment.loginUrl +'/login') {
        this.clonedRequest = req.clone({
          url: req.url,
          headers: req.headers
