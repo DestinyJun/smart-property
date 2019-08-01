@@ -57,7 +57,6 @@ export class HeaderComponent implements OnInit {
     this.item = [];
     this.headerSrv.getUserInfo().subscribe(
       value => {
-
         if (value.status === '1000') {
           this.username = value.data.username;
         }
@@ -132,11 +131,9 @@ export class HeaderComponent implements OnInit {
   }
   // sign out
   public  loginOutClick(): void {
-    console.log(123);
     this.toolSrv.setConfirmation('退出', '退出登录', () => {
       this.loginOutSrv.logout({}).subscribe(
         (value) => {
-          console.log(value);
           if (value.status === '1000') {
             this.localSrv.remove('appkey');
             this.localSrv.remove('item');
