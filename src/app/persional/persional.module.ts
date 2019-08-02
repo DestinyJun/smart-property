@@ -10,8 +10,8 @@ import {
   MessagesModule,
   RadioButtonModule
 } from 'primeng/primeng';
-import {FormsModule} from '@angular/forms';
 import {PersionalComponent} from './persional.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [

@@ -156,6 +156,12 @@ export class PublicMethedService {
      });
   }
 
+  /**
+   * Setting prompt box
+   * @param title
+   * @param message
+   * @param callback
+   */
   public  setConfirmation(title, message, callback: (...args: any[]) => any): void {
     this.confirmationService.confirm({
       message: `确认要${message}吗？`,

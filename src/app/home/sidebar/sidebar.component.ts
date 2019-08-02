@@ -34,33 +34,35 @@ export class SidebarComponent implements OnInit , OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
-    if (this.localSrv.getObject('sidebarItem') === '' || this.localSrv.getObject('sidebarItem') === null ) {
-      this.ItemData = this.toolSrv.ItemData;
-      this.localSrv.getObject('item').forEach(v => {
-        this.ItemData.forEach( h => {
-          if (v.title === h.title) {
-            this.items = [];
-            this.homeSrv.getChildrenRouter({parentCode: v.permisCode}).subscribe(
-              (value) => {
-                value.data.forEach( data => {
-                  h.routingItem.forEach( val => {
-                    if (val.label === data.title) {
-                      this.sidebarItem.push({parentCode: data.parentCode, label: data.title });
-                      h.item.push(val);
-                      this.flag = false;
-                    }
-                  });
-                });
-                this.localSrv.setObject('sidebarItem', this.ItemData);
-              }
-            );
-          }
-        });
-      });
-    } else {
-      // this.ItemData = []
-      this.ItemData = this.localSrv.getObject('sidebarItem');
-    }
+    // if (this.localSrv.getObject('sidebarItem') === '' || this.localSrv.getObject('sidebarItem') === null ) {
+    //   this.ItemData = this.toolSrv.ItemData;
+    //   this.localSrv.getObject('item').forEach(v => {
+    //     this.ItemData.forEach( h => {
+    //       if (v.title === h.title) {
+    //         this.items = [];
+    //         this.homeSrv.getChildrenRouter({parentCode: v.permisCode}).subscribe(
+    //           (value) => {
+    //             value.data.forEach( data => {
+    //               h.routingItem.forEach( val => {
+    //                 if (val.label === data.title) {
+    //                   this.sidebarItem.push({parentCode: data.parentCode, label: data.title });
+    //                   h.item.push(val);
+    //                   this.flag = false;
+    //                 }
+    //               });
+    //             });
+    //             console.log(this.toolSrv.ItemData);
+    //             console.log(this.ItemData);
+    //             this.localSrv.setObject('sidebarItem', this.ItemData);
+    //           }
+    //         );
+    //       }
+    //     });
+    //   });
+    // } else {
+    //   // this.ItemData = []
+    //   this.ItemData = this.localSrv.getObject('sidebarItem');
+    // }
   }
 
   // change the text Color
@@ -116,6 +118,7 @@ export class SidebarComponent implements OnInit , OnChanges, AfterViewInit {
   }
   // Listening to the parent component
   ngOnChanges(changes: SimpleChanges): void {
+    // this.ItemData = [];
     this.ItemData = this.toolSrv.ItemData;
     if (this.localSrv.getObject('sidebarItem') === 1 || this.localSrv.getObject('sidebarItem') === null ) {
       this.localSrv.getObject('item').forEach(v => {
