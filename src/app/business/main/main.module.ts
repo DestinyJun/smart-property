@@ -6,8 +6,8 @@ import { MainEventComponent } from './main-event/main-event.component';
 import { MainStatisComponent } from './main-statis/main-statis.component';
 import {EchartsBarModule} from '../../common/components/echarts-bar/echarts-bar.module';
 import {EchartsPieModule} from '../../common/components/echarts-pie/echarts-pie.module';
-import {TableModule} from 'primeng/table';
 import {ScrollPanelModule} from 'primeng/primeng';
+import {BasicTableModule} from '../../common/components/basic-table/basic-table.module';
 
 
 @NgModule({
@@ -21,8 +21,8 @@ import {ScrollPanelModule} from 'primeng/primeng';
     MainRoutingModule,
     EchartsBarModule,
     EchartsPieModule,
-    TableModule,
     ScrollPanelModule,
+    BasicTableModule
   ]
 })
 export class MainModule { }

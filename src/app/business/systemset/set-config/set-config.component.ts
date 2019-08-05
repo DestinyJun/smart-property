@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {GlobalService} from '../../../common/services/global.service';
 import {Addconfig, Modifyconfig, SetConfig} from '../../../common/model/set-config.model';
@@ -6,6 +6,7 @@ import {SetConfigService} from '../../../common/services/set-config.service';
 import {isObjectFlagSet} from 'tslint';
 import {Dropdown} from 'primeng/primeng';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
+import {TableOption} from '../../../common/components/basic-table/table.model';
 
 @Component({
   selector: 'rbi-set-config',
@@ -14,10 +15,8 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
 })
 export class SetConfigComponent implements OnInit {
   @ViewChild('addSetType', {static: true}) addSetType: Dropdown;
-  @ViewChild('input', {static: true}) input: Input;
-  public configTableTitle: any;
-  public configTableContent: SetConfig[];
   public configTableTitleStyle: any;
+  public optionTable: TableOption = new TableOption();
   public configSelect: SetConfig[];
   // 添加相关
   public configAddDialog: boolean;
@@ -45,24 +44,22 @@ export class SetConfigComponent implements OnInit {
   // initialization config
   public  configInitialization(): void {
     this.loadHidden = false;
-    this.configTableTitle = [
-      // {field: 'organizationId', header: '集团id'},
-      {field: 'settingCode', header: '设置编号'},
-      {field: 'settingName', header: '设置名称'},
-      {field: 'settingType', header: '设置类型'},
-    ];
     this.configService.querySetPage({pageNo: this.nowPage, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.configTableContent = value.data.contents;
-        // console.log(this.configTableContent);
-        this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
-        // console.log(123);
+        console.log(value);
+        if (value.status === '1000') {
+          this.setTableOption(value.data.contents);
+          this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
+        } else {
+          this.toolSrv.setToast('error', '查询失败', value.message);
+        }
+
       }
     );
+
     this.configService.getSetType({}).subscribe(
       (value) => {
-        // console.log(value);/
         value.data.forEach( v => {
           this.setTypeOption.push({label: v.settingName, value: v.settingCode});
 
@@ -73,12 +70,6 @@ export class SetConfigComponent implements OnInit {
     this.configTableTitleStyle = { background: '#282A31', color: '#DEDEDE', height: '6vh'};
 
   }
-  // // condition search click
-  // public  configSearchClick(): void {
-  //   // @ts-ignore
-  //   console.log(this.input.nativeElement.value);
-  //   console.log('这里是条件搜索');
-  // }
   // show add config dialog
   public  configAddClick(): void {
     this.configAddDialog = true;
@@ -142,6 +133,7 @@ export class SetConfigComponent implements OnInit {
             this.configInitialization();
             this.toolSrv.setToast('success', '操作成功', '修改成功');
             this.configModifyDialog = false;
+            this.initializationData();
             this.configSelect = [];
           } else {
             this.toolSrv.setToast('error', '操作失败', value.message);
@@ -215,11 +207,25 @@ export class SetConfigComponent implements OnInit {
     this.configService.querySetPage({pageNo: event, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.configTableContent = value.data.contents;
+        this.setTableOption(value.data.contents);
         this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
         // console.log(123);
       }
     );
     this.configSelect = [];
+  }
+  // seting table data
+  public  setTableOption(data): void {
+    this.optionTable.btnHidden = false;
+    this.optionTable.content = data;
+    this.optionTable.header = [
+      {field: 'settingCode', header: '设置编号'},
+      {field: 'settingName', header: '设置名称'},
+      {field: 'settingType', header: '设置类型'},
+    ];
+  }
+  
+  public  getSelectData(e): void {
+      this.configSelect = e;
   }
 }

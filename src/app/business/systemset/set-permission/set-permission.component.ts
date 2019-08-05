@@ -6,6 +6,7 @@ import {SetPermissionService} from '../../../common/services/set-permission.serv
 import {AddSetPermission, ModifySetPermission, PermitDTO, SetPermission} from '../../../common/model/set-peimission.model';
 import {TreeNode} from '../../../common/model/shared-model';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
+import {TableOption} from '../../../common/components/basic-table/table.model';
 
 @Component({
   selector: 'rbi-set-permission',
@@ -13,9 +14,8 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
   styleUrls: ['./set-permission.component.less']
 })
 export class SetPermissionComponent implements OnInit {
-  public permissionTableTitle: any;
-  public permissionTableContent: SetPermission[];
-  public permissionTableTitleStyle: any;
+  public optionTable: TableOption = new TableOption();
+  public permissionTableContent: any;
   public permissionSelect: SetPermission[];
   // 添加相关
   public permissionAddDialog: boolean;
@@ -26,6 +26,7 @@ export class SetPermissionComponent implements OnInit {
   public RoleCode: any;
   public primitDatas: any[] = [];
   public primitData: any[] = [];
+  public primitDatasList: any[] = [];
 
   // 删除相关
   public ids: any[] = [];
@@ -41,33 +42,19 @@ export class SetPermissionComponent implements OnInit {
   ngOnInit() {
     this.permissionInitialization();
   }
-
   // Initialize permission data
   public  permissionInitialization(): void {
     this.loadHidden = false;
-    this.permissionTableTitle = [
-      {field: 'roleCode', header: '角色编码'},
-      {field: 'roleName', header: '角色名称'},
-      {field: 'permisCode', header: '权限代码'},
-      {field: 'title', header: '权限名称'},
-      // {field: 'remark', header: '备注'},
-    ];
     this.permissionSrv.queryPermissionData({pageNo: 1, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
+        this.setTableOptin(value.data.contents);
         this.permissionTableContent = value.data.contents;
         this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
       }
     );
-    this.permissionTableTitleStyle = { background: '#282A31', color: '#DEDEDE', height: '6vh'};
-
   }
-  // // condition search click
-  // public  permissionSearchClick(): void {
-  //   // @ts-ignore
-  //   console.log(this.input.nativeElement.value);
-  //   console.log('这里是条件搜索');
-  // }
+
   // show add permission dialog
   public  permissionConfigClick(): void {
     this.primitTree = [];
@@ -75,7 +62,6 @@ export class SetPermissionComponent implements OnInit {
     this.loadHidden = false;
     this.permissionSrv.queryRoleCodeCodeList({}).subscribe(
       (value) => {
-        // console.log(value);
         value.data.forEach( v => {
           this.RoleCodeList.push({label: v.roleName, value: v.roleCode});
         });
@@ -92,58 +78,65 @@ export class SetPermissionComponent implements OnInit {
   }
   // sure add permission
   public  permissionAddSureClick(): void {
-    if (this.RoleCode !== undefined && this.primitDatas !== []) {
-      const flag = [];
-      this.primitData.forEach(v => {
-        this.primitDatas.forEach( item => {
-          if (v === item) {
-            flag.push(v);
-            this.primitDatas.splice( this.primitDatas.indexOf(item), 1);
-          }
-        });
-      });
-
-      flag.forEach(item => {
-        this.primitData.forEach( v => {
-          if (v === item) {
-            this.primitData.splice(this.primitData.indexOf(v), 1);
-          }
-        });
-      });
+    // console.log(this.primitDatas);
+    if (this.primitDatas.length > 0) {
+      this.primitData = [];
       this.toolSrv.setConfirmation('增加', '增加', () => {
-        if (this.primitDatas.length >= 1) {
-          this.loadHidden = false;
-          this.permissionSrv.addRolePerimit({roleCode: this.RoleCode, permisCodes: this.primitDatas.join(',')}).subscribe(
-            (data) => {
-              this.loadHidden = true;
-              this.toolSrv.setToast('success', '操作成功', data.message);
-              this.permissionAddDialog = false;
-              this.permissionInitialization();
-              this.initializationData();
-            }
-          );
-        }
-        if (this.primitData.length >= 1) {
-          this.loadHidden = false;
-          this.permissionTableContent.forEach( v => {
-            this.primitData.forEach(item => {
-              if (v.roleCode === this.RoleCode && v.permisCode === item) {
-                this.ids.push(v.id);
+        if (this.permissionTableContent.length <= this.primitDatas.length) {
+          if (this.permissionTableContent.length === 0) {
+            this.primitDatas.forEach(v => {
+              this.primitData.push(v.value);
+            });
+          } else {
+            this.permissionTableContent.forEach(val => {
+              this.primitDatas.forEach((v, index) => {
+                if (v.value === val.permisCode) {
+                  this.primitDatas.splice(index, 1);
+                }
+              });
+            });
+            this.primitDatas.forEach( v => {
+              this.primitData.push(v.value);
+            });
+          }
+          if (this.primitData.length > 0) {
+            this.loadHidden = false;
+            this.permissionSrv.addRolePerimit({roleCode: this.RoleCode, permisCodes: this.primitData.join(',')}).subscribe(
+              (data) => {
+                this.loadHidden = true;
+                this.toolSrv.setToast('success', '操作成功', data.message);
+                this.permissionAddDialog = false;
+                this.permissionInitialization();
+                this.initializationData();
+              }
+            );
+          }
+        } else {
+          const list = this.permissionTableContent;
+          this.primitDatas.forEach( v => {
+            list.forEach( (val, index) => {
+              if (v.value === val.permisCode) {
+                list.splice(index, 1);
               }
             });
           });
-          this.permissionSrv.deleteRolePerimit({ids: this.ids.join(',')}).subscribe(
-            (value) => {
-              if (value.status === '1000') {
-                this.permissionInitialization();
-                this.toolSrv.setToast('success', '操作成功', '删除成功');
-                this.permissionAddDialog = false;
-                this.permissionSelect = [];
-              } else {
-                this.toolSrv.setToast('error', '操作失败', value.message);
+          list.forEach(v => {
+            this.ids.push(v.id);
+          });
+          if (this.ids.length > 0) {
+            this.permissionSrv.deleteRolePerimit({ids: this.ids.join(',')}).subscribe(
+              (value) => {
+                if (value.status === '1000') {
+                  this.permissionInitialization();
+                  this.toolSrv.setToast('success', '操作成功', '删除成功');
+                  this.permissionAddDialog = false;
+                  this.permissionSelect = [];
+                } else {
+                  this.toolSrv.setToast('error', '操作失败', value.message);
+                }
               }
-            }
-          );
+            );
+          }
         }
       });
     } else {
@@ -158,7 +151,7 @@ export class SetPermissionComponent implements OnInit {
     this.RoleCodeList = [];
     this.permissionInitialization();
   }
-  // delete permission
+// delete permission
   public  permissionDeleteClick(): void {
     if (this.permissionSelect === undefined || this.permissionSelect.length === 0) {
       this.toolSrv.setToast('error', '操作错误', '请选择需要删除的项');
@@ -184,19 +177,13 @@ export class SetPermissionComponent implements OnInit {
   // Privilege name selection
   public  setRoleNameChange(e): void {
     this.RoleCode = e.value;
-    this.permissionSrv.queryPerimitList({}).subscribe(
-      (value) => {
-        this.primitTree = this.initializeTree(value.data);
-        this.loadHidden = true;
-      }
-    );
+    this.primitDatasList = [];
     this.permissionSrv.queryRolePermit({roleCode: e.value}).subscribe(
       (value) => {
-        this.primitDatas = [];
         value.data.forEach( v => {
-          this.primitDatas.push(v.permisCode);
-          this.primitData = this.primitDatas;
+          this.primitDatasList.push(v.permisCode);
         });
+        this.checkNode(this.primitTree, this.primitDatasList);
       }
     );
   }
@@ -208,23 +195,11 @@ export class SetPermissionComponent implements OnInit {
     this.primitDatas = [];
     this.RoleCode = '';
   }
-  // get  selected data
-  public  getCheckBox(e, fa): void {
-      let flagfa = true;
-      this.primitDatas.forEach(v => {
-        if (v === fa) {
-          flagfa = false;
-        }
-      });
-      if (flagfa) {
-        this.primitDatas.push(fa);
-      }
-  }
   // paging query
   public  nowpageEventHandle(event: any): void {
     this.permissionSrv.queryPermissionData({pageNo: event, pageSize: 10}).subscribe(
       (value) => {
-        this.permissionTableContent = value.data.contents;
+        this.setTableOptin(value.data.contents);
         this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
       }
     );
@@ -239,6 +214,7 @@ export class SetPermissionComponent implements OnInit {
       childnode.value = data[i].permisCode;
       childnode.id = data[i].id;
       childnode.label = data[i].title;
+      childnode.check = false;
       childnode.parentCode = data[i].parentCode;
       if (data[i].permitDTO != null && data[i].permitDTO.length !== 0 ) {
         childnode.children = this.initializeTree(data[i].permitDTO);
@@ -248,5 +224,58 @@ export class SetPermissionComponent implements OnInit {
       oneChild.push(childnode);
     }
     return oneChild;
+  }
+  // set table data
+  public  setTableOptin(data): void {
+    this.optionTable.btnHidden = false;
+    this.optionTable.header = [
+      {field: 'roleCode', header: '角色编码'},
+      {field: 'roleName', header: '角色名称'},
+      {field: 'permisCode', header: '权限代码'},
+      {field: 'title', header: '权限名称'},
+      // {field: 'remark', header: '备注'},
+    ];
+    this.optionTable.content = data;
+  }
+
+  public  checkNode(nodes: TreeNode[], str: any[]): any {
+    for (let i = 0 ; i < nodes.length ; i++) {
+      if (!nodes[i].check) {
+        for (let j = 0 ; j < nodes[i].children.length ; j++) {
+          if (str.includes(nodes[i].children[j].value)) {
+            if (!this.primitDatas.includes(nodes[i].children[j])) {
+              this.primitDatas.push(nodes[i].children[j]);
+            }
+          }
+        }
+      }
+      if (nodes[i].check) {
+        return;
+      }
+      this.checkNode(nodes[i].children, str);
+      const count = nodes[i].children.length;
+      let c = 0;
+      for (let j = 0 ; j < nodes[i].children.length ; j++) {
+        if (this.primitDatas.includes(nodes[i].children[j])) {
+           c = c + 1;
+        }
+        if (nodes[i].children[j].partialSelected) {
+          nodes[i].partialSelected = true;
+        }
+      }
+      if (c === 0) {
+      } else if (c === count) {
+        nodes[i].partialSelected = false;
+        if (!this.primitDatas.includes(nodes[i])) {
+          this.primitDatas.push(nodes[i]);
+        }
+      } else {
+        nodes[i].partialSelected = true;
+      }
+    }
+  }
+
+  public  getSelectData(e): void {
+      this.permissionSelect = e;
   }
 }

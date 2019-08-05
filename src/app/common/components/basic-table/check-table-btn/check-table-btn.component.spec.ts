@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SetCarkindComponent } from './set-carkind.component';
+import { CheckTableBtnComponent } from './check-table-btn.component';
 
-describe('SetCarkindComponent', () => {
-  let component: SetCarkindComponent;
-  let fixture: ComponentFixture<SetCarkindComponent>;
+describe('CheckTableBtnComponent', () => {
+  let component: CheckTableBtnComponent;
+  let fixture: ComponentFixture<CheckTableBtnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SetCarkindComponent ]
+      declarations: [ CheckTableBtnComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SetCarkindComponent);
+    fixture = TestBed.createComponent(CheckTableBtnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

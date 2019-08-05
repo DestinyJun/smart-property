@@ -5,6 +5,7 @@ import {AddSetRole, ModifySetRole, SetRole} from '../../../common/model/set-role
 import {SetRoleService} from '../../../common/services/set-role.service';
 import {isObjectFlagSet} from 'tslint';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
+import {TableOption} from '../../../common/components/basic-table/table.model';
 
 @Component({
   selector: 'rbi-set-role',
@@ -12,10 +13,9 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
   styleUrls: ['./set-role.component.less']
 })
 export class SetRoleComponent implements OnInit {
-  public roleTableTitle: any;
-  public roleTableContent: SetRole[];
-  public roleTableTitleStyle: any;
+  public optionTable: TableOption = new TableOption();
   public roleSelect: SetRole[];
+  public roleTableContent: SetRole[];
   // 添加相关
   public roleAddDialog: boolean;
   public roleAdd: AddSetRole = new AddSetRole();
@@ -43,23 +43,18 @@ export class SetRoleComponent implements OnInit {
   // initialization role
   public  roleInitialization(): void {
     this.loadHidden = false;
-    this.roleTableTitle = [
-      {field: 'userId', header: '用户ID'},
-      {field: 'username', header: '用户名称'},
-      {field: 'realName', header: '真实姓名'},
-      {field: 'roleCode', header: '角色编码'},
-      {field: 'roleName', header: '角色名称'},
-      // {field: 'remark', header: '备注'},
-    ];
     this.roleSrv.queryRoleList({pageNo: 1, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.roleTableContent = value.data.contents;
-        this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
+        if (value.status === '1000') {
+          this.roleTableContent = value.data.contents;
+          this.setTableData(value.data.constents);
+          this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
+        } else {
+          this.toolSrv.setToast('error', '查询错误', value.message);
+        }
       }
     );
-    this.roleTableTitleStyle = { background: '#282A31', color: '#DEDEDE', height: '6vh'};
-
   }
   // // condition search click
   // public  roleSearchClick(): void {
@@ -226,12 +221,30 @@ export class SetRoleComponent implements OnInit {
     this.roleSrv.queryRoleList({pageNo: event, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.roleTableContent = value.data.contents;
-        // console.log(this.roleTableContent);
-        this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
-        // console.log(123);
+        if (value.status === '1000') {
+          this.setTableData(value.data.constants);
+          this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
+        } else {
+          this.toolSrv.setToast('error', '请求错误', value.data.message);
+        }
       }
     );
     this.roleSelect = [];
+  }
+  public  setTableData(data): void {
+    this.optionTable.header = [
+      {field: 'userId', header: '用户ID'},
+      {field: 'username', header: '用户名称'},
+      {field: 'realName', header: '真实姓名'},
+      {field: 'roleCode', header: '角色编码'},
+      {field: 'roleName', header: '角色名称'},
+      // {field: 'remark', header: '备注'},
+    ];
+    this.optionTable.btnHidden = false;
+    this.optionTable.content = data;
+
+  }
+  public  getSelectData(e): void {
+      this.roleSelect = e;
   }
 }

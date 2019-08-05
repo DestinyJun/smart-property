@@ -6,7 +6,9 @@ export class TreeNode {
   permisOrder?: any;
   router?: any;
   parentCode?: any;
+  check?: boolean;
   color?: any;
+  partialSelected?: any;
   remark?: any;
   idt?: any;
   udt?: any;

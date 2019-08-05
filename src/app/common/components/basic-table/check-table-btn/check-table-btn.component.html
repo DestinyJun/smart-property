@@ -1,0 +1,74 @@
+<div class="check-table-btn" *ngIf="option.header">
+  <div *ngIf="!option.btnHidden">
+    <p-table [columns]="option.header" [value]="option.content"  [scrollable]="true"  scrollHeight="50vh"  [style]="{'width': '79vw'}"  [(selection)]="select"   (onRowSelect)="selectClick($event)" (onRowUnselect)="noSelectClick($event)">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 3em" [ngStyle]="{  'background': '#282A31', 'color': '#DEDEDE', 'height': '6vh'}">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th *ngFor="let col of columns"  [ngStyle]="{  'background': '#282A31','color': '#DEDEDE',' height': '6vh'}">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+        <!--普通列表-->
+        <tr [pSelectableRow]="rowData" *ngIf="rowIndex%2!=1" [ngStyle]="{'background':'#33353C','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
+          <td style="width: 3em">
+            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+          </td>
+          <td  *ngFor="let col of columns">
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+        <tr [pSelectableRow]="rowData" *ngIf="rowIndex%2!=0" [ngStyle]="{'background':'#2E3037','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
+          <td style="width: 3em">
+            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+          </td>
+          <td  *ngFor="let col of columns" >
+            {{rowData[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="option.btnHidden">
+    <p-table [columns]="option.header" [value]="option.content"  [scrollable]="true"  scrollHeight="50vh"  [style]="{'width': '79vw'}"  [(selection)]="select"   (onRowSelect)="selectClick($event)" (onRowUnselect)="noSelectClick($event)">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th style="width: 3em" [ngStyle]="{  'background': '#282A31', 'color': '#DEDEDE', 'height': '6vh'}">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th *ngFor="let col of columns"  [ngStyle]="{  'background': '#282A31','color': '#DEDEDE',' height': '6vh'}">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+        <!--普通列表-->
+        <tr [pSelectableRow]="rowData" *ngIf="rowIndex%2!=1" [ngStyle]="{'background':'#33353C','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
+          <td>
+            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+          </td>
+          <td  *ngFor="let col of columns.slice(0, columns.length-option.tableList.length)" >
+            {{rowData[col.field]}}
+          </td>
+          <td *ngFor="let item of option.tableList.length">
+            <button class="check-table-btn-detail" (click)="DetailClick(rowData)">{{item.label}}</button>
+          </td>
+        </tr>
+        <tr [pSelectableRow]="rowData" *ngIf="rowIndex%2!=0" [ngStyle]="{'background':'#2E3037','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
+          <td>
+            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+          </td>
+          <td  *ngFor="let col of columns.slice(0, columns.length-1)" >
+            {{rowData[col.field]}}
+          </td>
+          <td>
+            <button class="check-table-btn-detail" (click)="DetailClick(rowData)">详情</button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

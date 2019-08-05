@@ -1,0 +1,22 @@
+<div class="basic-dialog">
+  <p-dialog header="信息添加" [(visible)]="dialog"  [width]="800">
+    <!--Content-->
+    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" >
+      <div class="ui-g-6">
+        <div class="ui-g-4">
+
+        </div>
+        <div class="ui-g-8">
+          <input  id="settingName" type="text" pInputText placeholder="请输入设置名称.." >
+          <p-dropdown #addSetType [options]="RoleCodeList" scrollHeight="100px" placeholder="请选择设置类型..."></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button  class="basic-dialog-btn basic-dialog-btn-sure" (click)="SureClick($event)">确认</button>
+        <button  class="basic-dialog-btn basic-dialog-btn-false" (click)="CloseClick()">取消</button>
+      </div>
+    </p-footer>
+  </p-dialog>
+</div>

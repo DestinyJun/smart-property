@@ -74,7 +74,6 @@ export class PersionalComponent implements OnInit {
   public  changeUserInfoSubmitClick(): void {
     this.persionSrv.updateUserInfo(this.changeUserInfo).subscribe(
       value => {
-        console.log(value);
         if (value.status === '1000') {
           this.toolSrv.setToast('success', '修改成功', '修改成功');
         } else {
@@ -89,9 +88,10 @@ export class PersionalComponent implements OnInit {
     this.toolSrv.setConfirmation('退出', '退出登录', () => {
       this.loginOutSrv.logout({}).subscribe(
         (value) => {
-          console.log(value);
           if (value.status === '1000') {
             this.localSrv.remove('appkey');
+            this.localSrv.remove('sidebarItem');
+            this.localSrv.remove('item');
             this.router.navigate(['/login']);
           } else {
             window.alert(value.message);

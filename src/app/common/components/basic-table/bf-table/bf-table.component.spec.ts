@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SetNationComponent } from './set-nation.component';
+import { BfTableComponent } from './bf-table.component';
 
-describe('SetNationComponent', () => {
-  let component: SetNationComponent;
-  let fixture: ComponentFixture<SetNationComponent>;
+describe('BfTableComponent', () => {
+  let component: BfTableComponent;
+  let fixture: ComponentFixture<BfTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SetNationComponent ]
+      declarations: [ BfTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SetNationComponent);
+    fixture = TestBed.createComponent(BfTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

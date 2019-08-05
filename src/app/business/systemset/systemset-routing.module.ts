@@ -11,9 +11,6 @@ const routes: Routes = [
     path: '',
     component: SystemsetComponent,
     children: [
-      // {path: 'carkind', component: SetCarkindComponent},
-      // {path: 'carbrand', component: SetCarbrandComponent},
-      // {path: 'nation', component: SetNationComponent},
       {path: 'config', component: SetConfigComponent},
       {path: 'permission', component: SetPermissionComponent},
       {path: 'role', component: SetRoleComponent},

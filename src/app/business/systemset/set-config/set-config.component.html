@@ -28,52 +28,12 @@
   </div>
   <!--表格-->
   <div class="set-config-table">
-    <p-scrollPanel [style]="{width:'100%',height: '90%'}" styleClass="custombar">
-      <p-table [columns]="configTableTitle" [value]="configTableContent" [(selection)]="configSelect">
-        <ng-template pTemplate="header" let-columns>
-          <tr >
-            <th style="width: 3em"  [ngStyle]="this.configTableTitleStyle">
-              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-            </th>
-            <th *ngFor="let col of columns"  [ngStyle]="this.configTableTitleStyle">
-              {{col.header}}
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-          <tr [pSelectableRow]="rowData"  *ngIf="rowIndex%2!=1" [ngStyle]="{'background':'#33353C','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
-            <td>
-              <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-            </td>
-            <td  *ngFor="let col of columns" >
-              {{rowData[col.field]}}
-            </td>
-          </tr>
-          <tr [pSelectableRow]="rowData"  *ngIf="rowIndex%2!=0" [ngStyle]="{'background':'#2E3037','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
-            <td>
-              <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-            </td>
-            <td  *ngFor="let col of columns" >
-              {{rowData[col.field]}}
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-scrollPanel>
-
+    <rbi-check-table-btn [option]="optionTable" (selectData)="getSelectData($event)" [select]="configSelect"></rbi-check-table-btn>
   </div>
   <!--增加弹窗-->
   <p-dialog header="信息添加" [(visible)]="configAddDialog"  [width]="800">
     <!--Content-->
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" >
-      <!--<div class="ui-g-6">-->
-        <!--<div class="ui-g-4">-->
-          <!--<label  for="settingCode">设置编号:</label>-->
-        <!--</div>-->
-        <!--<div class="ui-g-8">-->
-          <!--<input id="settingCode" type="text" pInputText placeholder="请输入设置编号" [(ngModel)]="configAdd.settingCode">-->
-        <!--</div>-->
-      <!--</div>-->
       <div class="ui-g-6">
         <div class="ui-g-4">
           <label for="settingName">设置名称：</label>

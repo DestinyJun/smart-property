@@ -28,6 +28,7 @@ import {LoadingModule} from '../../common/components/loading/loading.module';
 import { SetRoleComponent } from './set-role/set-role.component';
 import { SetPartComponent } from './set-part/set-part.component';
 import {PublicMethedService} from '../../common/public/public-methed.service';
+import {BasicTableModule} from '../../common/components/basic-table/basic-table.module';
 
 @NgModule({
   declarations: [
@@ -53,11 +54,11 @@ import {PublicMethedService} from '../../common/public/public-methed.service';
     PagingModule,
     FormsModule,
     DropdownModule,
-    FileUploadModule,
     CalendarModule,
     LoadingModule,
     CheckboxModule,
     TreeModule,
+    BasicTableModule
   ],
   providers: [MessageService, ConfirmationService, DatePipe, PublicMethedService]
 })

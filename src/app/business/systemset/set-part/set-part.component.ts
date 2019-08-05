@@ -1,10 +1,8 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {GlobalService} from '../../../common/services/global.service';
 import {AddSetPart, ModifySetPart, SetPart} from '../../../common/model/set-part.model';
 import {SetPartService} from '../../../common/services/set-part.service';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
+import {TableOption} from '../../../common/components/basic-table/table.model';
 
 @Component({
   selector: 'rbi-set-part',
@@ -12,11 +10,7 @@ import {PublicMethedService} from '../../../common/public/public-methed.service'
   styleUrls: ['./set-part.component.less']
 })
 export class SetPartComponent implements OnInit {
-
-  @ViewChild('input', {static: true}) input: Input;
-  public partTableTitle: any;
-  public partTableContent: SetPart[];
-  public partTableTitleStyle: any;
+  public optionTable: TableOption = new TableOption();
   public partSelect: SetPart[];
   // 添加相关
   public partAddDialog: boolean;
@@ -41,21 +35,13 @@ export class SetPartComponent implements OnInit {
   // initialization part
   public  partInitialization(): void {
     this.loadHidden = false;
-    this.partTableTitle = [
-      {field: 'id', header: 'id'},
-      {field: 'roleCode', header: '权限编号'},
-      {field: 'roleName', header: '权限名称'},
-      {field: 'remark', header: '备注'},
-    ];
     this.partSrv.queryPartPageData({pageNo: 1, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.partTableContent = value.data.contents;
+        this.setTableOption(value.data.contents);
         this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
       }
     );
-    this.partTableTitleStyle = { background: '#282A31', color: '#DEDEDE', height: '6vh'};
-
   }
   // condition search click
   // public  partSearchClick(): void {
@@ -179,9 +165,22 @@ export class SetPartComponent implements OnInit {
     this.partSrv.queryPartPageData({pageNo: event, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.partTableContent = value.data.contents;
+        this.setTableOption(value.data.contents);
         this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
       });
     this.partSelect = [];
+  }
+  public  setTableOption(data): void {
+    this.optionTable.header = [
+      {field: 'id', header: 'id'},
+      {field: 'roleCode', header: '权限编号'},
+      {field: 'roleName', header: '权限名称'},
+      {field: 'remark', header: '备注'},
+    ];
+    this.optionTable.content =  data;
+    this.optionTable.btnHidden =  false;
+  }
+  public  getSelectData(e): void {
+      this.partSelect = e;
   }
 }

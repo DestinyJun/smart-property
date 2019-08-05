@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
   public items = [
     {router: '/home/main', title: '首页', color: '#fff'},
     {router: '/home/baseinfo/owner', title: '基础信息', color: '#fff'},
+    // {router: '/home/baseinfo/owner', title: '基础信息', color: '#fff'},
     // {router: '/home/assoc/assocstaff', title: '关联设置', color: '#fff'},
     {router: '/home/charge/payment', title: '收费管理', color: '#fff'},
     // {router: '/home/monitor/log', title: '运行事件监视', color: '#fff'},
@@ -137,6 +138,7 @@ export class HeaderComponent implements OnInit {
           if (value.status === '1000') {
             this.localSrv.remove('appkey');
             this.localSrv.remove('item');
+            this.localSrv.remove('sidebarItem');
             this.router.navigate(['/login']);
           } else {
             this.toolSrv.setToast('error', '请求失败', value.message);

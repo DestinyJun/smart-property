@@ -1,0 +1,25 @@
+<div class="bf-table">
+  <p-table [columns]="option.tableHeader" [value]="option.tableContent"  [scrollable]="true"  scrollHeight="29.5vh" styleClass="custombar" [style]="{'width': '82.5vw'}">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [ngStyle]="{ background: '#33353C', color: '#DEDEDE', height: '5vh'}">
+          {{col.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+      <!--普通列表-->
+      <tr [pSelectableRow]="rowData" *ngIf="rowIndex%2!=1" [ngStyle]="{'background':'#55545A','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
+        <td  *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+
+      </tr>
+      <tr [pSelectableRow]="rowData" *ngIf="rowIndex%2!=0" [ngStyle]="{'background':'#646464','color':'#DEDEDE','text-align': 'center','height':'2vw'}">
+        <td  *ngFor="let col of columns" >
+          {{rowData[col.field]}}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

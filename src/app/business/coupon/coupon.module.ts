@@ -6,7 +6,6 @@ import { CouponPendingReviewComponent } from './coupon-pending-review/coupon-pen
 import { CouponAuditedComponent } from './coupon-audited/coupon-audited.component';
 import { CouponComponent } from './coupon/coupon.component';
 import {CouponRoutingModule} from './coupon-routing.module';
-import {RouterModule} from '@angular/router';
 import {LoadingModule} from '../../common/components/loading/loading.module';
 import {PagingModule} from '../../common/components/paging/paging.module';
 import {
