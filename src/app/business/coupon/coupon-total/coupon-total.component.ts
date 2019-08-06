@@ -246,10 +246,14 @@ export class CouponTotalComponent implements OnInit {
         });
       }
     );
-    this.optionDialog = {
-      type: 'add',
-      title: '添加信息'
-    }
+    // this.optionDialog = {
+    //   type: 'add',
+    //   title: '添加信息',
+    //   width: '800',
+    //   dataList: [{
+    //     value:
+    //   }]
+    // };
     this.couponTotalAddDialog = true;
     console.log('这里是添加信息');
   }
