@@ -100,7 +100,15 @@ export class PublicMethedService {
       this.messageService.clear();
     }, 3000);
   }
-
+  // set Toast
+  public  setQuestJudgment(status, message, callback: (...args: any[]) => any): void {
+       if (status === '1000') {
+         this.setToast('success', '操作成功', message);
+         callback();
+       } else {
+         this.setToast('error', '操作失败', message);
+       }
+  }
   /**
    * get Admin Status
    * @param parameter  (Request parameter)

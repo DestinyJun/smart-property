@@ -67,14 +67,12 @@ export class CouponReviewComponent implements OnInit {
     this.loadingHide = false;
     this.couponReviewSrv.queryCouponReviewPageData({pageNo: this.nowPage, pageSize: 10}).subscribe(
       (value) => {
-        console.log(value);
         this.loadingHide = true;
         this.couponReviewTableContent = value.data.contents;
         this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
       }
     );
     this.couponReviewTableTitleStyle = {background: '#282A31', color: '#DEDEDE', height: '6vh'};
-    console.log(this.couponReviewSelect);
 
   }
 

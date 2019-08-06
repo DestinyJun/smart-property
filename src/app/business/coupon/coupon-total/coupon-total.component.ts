@@ -246,15 +246,176 @@ export class CouponTotalComponent implements OnInit {
         });
       }
     );
-    // this.optionDialog = {
-    //   type: 'add',
-    //   title: '添加信息',
-    //   width: '800',
-    //   dataList: [{
-    //     value:
-    //   }]
-    // };
-    this.couponTotalAddDialog = true;
+    this.optionDialog = {
+      type: 'add',
+      title: '添加信息',
+      width: '800',
+      dataList: [
+        {
+        value: {
+          dropdown: {
+            value: 'villageCode',
+            label: '请选择小区',
+            option: this.SearchOption.village
+          },
+          radioBox: [],
+          date: {
+            label: '',
+            value: '',
+          },
+          textBox: {
+            label: '',
+            value: '',
+            col: '',
+            row: '',
+          },
+          input: {
+            label: '',
+            value: '',
+            filter: '',
+          },
+        },
+        name: '小区名称',
+        type: 'dropdown'
+      },
+        {
+        value: {
+          dropdown: {
+            value: 'regionCode',
+            label: '请选择地块',
+            option: this.SearchOption.village
+          },
+          radioBox: [],
+          date: {
+            label: '',
+            value: '',
+          },
+          textBox: {
+            label: '',
+            value: '',
+            col: '',
+            row: '',
+          },
+          input: {
+            label: '',
+            value: '',
+            filter: '',
+          },
+        },
+        name: '地块名称',
+        type: 'dropdown'
+      },
+        {
+        value: {
+          dropdown: {
+            value: 'buildingCode',
+            label: '请选择楼栋',
+            option: this.SearchOption.village
+          },
+          radioBox: [],
+          date: {
+            label: '',
+            value: '',
+          },
+          textBox: {
+            label: '',
+            value: '',
+            col: '',
+            row: '',
+          },
+          input: {
+            label: '',
+            value: '',
+            filter: '',
+          },
+        },
+        name: '楼栋名称',
+        type: 'dropdown'
+      },
+        {
+          value: {
+            dropdown: {
+              value: 'buildingCode',
+              label: '请选择楼栋',
+              option: this.SearchOption.village
+            },
+            radioBox: [],
+            date: {
+              label: '',
+              value: '',
+            },
+            textBox: {
+              label: '',
+              value: '',
+              col: '',
+              row: '',
+            },
+            input: {
+              label: '',
+              value: '',
+              filter: '',
+            },
+          },
+          name: '单元名称',
+          type: 'dropdown'
+        },
+        {
+          value: {
+            dropdown: {
+              value: 'buildingCode',
+              label: '请选择楼栋',
+              option: this.SearchOption.village
+            },
+            radioBox: [],
+            date: {
+              label: '',
+              value: '',
+            },
+            textBox: {
+              label: '',
+              value: '',
+              col: '',
+              row: '',
+            },
+            input: {
+              label: '',
+              value: '',
+              filter: '',
+            },
+          },
+          name: '房屋编号',
+          type: 'dropdown'
+        },
+        {
+          value: {
+            dropdown: {
+              value: 'buildingCode',
+              label: '请选择楼栋',
+              option: this.SearchOption.village
+            },
+            radioBox: [],
+            date: {
+              label: '',
+              value: '',
+            },
+            textBox: {
+              label: '',
+              value: '',
+              col: '',
+              row: '',
+            },
+            input: {
+              label: '请输入客户电话',
+              value: 'mobilePhone',
+              filter: 'number',
+            },
+          },
+          name: '客户电话',
+          type: 'input'
+        },
+      ]
+    };
+    // this.couponTotalAddDialog = true;
     console.log('这里是添加信息');
   }
   // search userInfo

@@ -51,22 +51,16 @@ export class LoginComponent implements OnInit{
     this.loginSrv.login({username: userName, password: passWord , module: 'CLOUD_HOUSE_WEB'}).subscribe(
       (value) => {
         this.loadHidden = true;
-
-        if (value.status === '1000') {
+        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           this.item = [];
           this.localSessionStorage.set('appkey', value.data.token);
           value.data.permitDTOS.forEach( v => {
-            // console.log(v);
             this.item.push({permisCode: v.permisCode , title: v.title});
           });
           this.localSessionStorage.setObject('item', this.item);
           this.localSessionStorage.setObject('sidebarItem', 1);
-
           this.route.navigate(['/home/main']);
-          // console.log(this.localSessionStorage.get('appkey'));
-        } else {
-          this.toolSrv.setToast('error', '登录失败', value.message);
-        }
+        });
       }
     );
   }

@@ -28,6 +28,7 @@ export class BasicDialogComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
+    this.dialog = false;
   }
   public  SureClick(e): void {
     this.dialog = false;
@@ -44,6 +45,7 @@ export class BasicDialogComponent implements OnInit, OnChanges {
     if (this.dialogOption) {
       this.dialog = true;
     }
+    console.log(this.dialogData);
   }
 
 }

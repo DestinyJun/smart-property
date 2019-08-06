@@ -46,13 +46,11 @@ export class SetRoleComponent implements OnInit {
     this.roleSrv.queryRoleList({pageNo: 1, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        if (value.status === '1000') {
+        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           this.roleTableContent = value.data.contents;
-          this.setTableData(value.data.constents);
+          this.setTableData(value.data.contents);
           this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
-        } else {
-          this.toolSrv.setToast('error', '查询错误', value.message);
-        }
+        });
       }
     );
   }
@@ -70,26 +68,28 @@ export class SetRoleComponent implements OnInit {
     this.roleSrv.queryUserInfo({}).subscribe(
       (value) => {
         this.loadHidden = true;
-        value.data.forEach( v => {
-          this.RoleCodeList.push({label: v.realName, value: v.userId});
+        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          value.data.forEach( v => {
+            this.RoleCodeList.push({label: v.realName, value: v.userId});
+          });
+          this.roleAddDialog = true;
         });
-        this.roleAddDialog = true;
       }
     );
     this.roleSrv.queryRoleInfo({}).subscribe(
       (value) => {
-        value.data.forEach( v => {
-          this.primitList.push({label: v.roleName, value:  v.roleCode});
-        });
         this.loadHidden = true;
-
+        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          value.data.forEach( v => {
+            this.primitList.push({label: v.roleName, value:  v.roleCode});
+          });
+        });
       }
     );
   }
   // add role quest
   public  roleAddSureClick(): void {
     const flag = [];
-
     if (this.userCode !== undefined && this.roleDatas !== []) {
       this.toolSrv.setConfirmation('增加', '增加', () => {
         this.roleData.forEach(v => {
@@ -100,7 +100,6 @@ export class SetRoleComponent implements OnInit {
             }
           });
         });
-
         flag.forEach(item => {
           this.roleData.forEach( v => {
             if (v === item) {
@@ -108,19 +107,16 @@ export class SetRoleComponent implements OnInit {
             }
           });
         });
-
-
         if (this.roleDatas.length >= 1) {
+          this.loadHidden = false;
           this.roleSrv.addUserRole({userId: this.userCode , roleCodes: this.roleDatas.join(',')}).subscribe(
             (value ) => {
-              if (value.status === '1000') {
-                this.toolSrv.setToast('success', '操作成功', '新增成功');
+              this.loadHidden = true;
+              this.toolSrv.setQuestJudgment(value.status, value.message, () => {
                 this.roleAddDialog = false;
                 this.roleInitialization();
                 this.initializationData();
-              } else  {
-                this.toolSrv.setToast('error', '新增失败', value.message);
-              }
+              });
             }
           );
         }
@@ -135,17 +131,15 @@ export class SetRoleComponent implements OnInit {
               }
             });
           });
+          this.loadHidden = false;
           this.roleSrv.deleteUserInfo({ids: this.ids.join(',')}).subscribe(
             (value) => {
-              if (value.status === '1000') {
+              this.loadHidden = true;
+              this.toolSrv.setQuestJudgment(value.status, value.message, () => {
                 this.roleInitialization();
-                this.toolSrv.setToast('success', '操作成功', '删除成功');
                 this.roleAddDialog = false;
-
                 this.roleSelect = [];
-              } else {
-                this.toolSrv.setToast('error', '操作失败', value.message);
-              }
+              });
             }
           );
         }
@@ -170,16 +164,14 @@ export class SetRoleComponent implements OnInit {
         this.roleSelect.forEach(v => {
           this.ids.push(v.id);
         });
+        this.loadHidden = false;
         this.roleSrv.deleteUserInfo({ids: this.ids.join(',')}).subscribe(
           (value) => {
-            if (value.status === '1000') {
+            this.loadHidden = true;
+            this.toolSrv.setQuestJudgment(value.status, value.message, () => {
               this.roleInitialization();
-              this.toolSrv.setToast('success', '操作成功', '删除成功');
-              // this.roleModifyDialog = false;
               this.roleSelect = [];
-            } else {
-              this.toolSrv.setToast('error', '操作失败', value.message);
-            }
+            });
           }
         );
       });
@@ -221,12 +213,10 @@ export class SetRoleComponent implements OnInit {
     this.roleSrv.queryRoleList({pageNo: event, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        if (value.status === '1000') {
-          this.setTableData(value.data.constants);
+        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          this.setTableData(value.data.contents);
           this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
-        } else {
-          this.toolSrv.setToast('error', '请求错误', value.data.message);
-        }
+        });
       }
     );
     this.roleSelect = [];

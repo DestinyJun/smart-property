@@ -1,7 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {CalendarModule, CheckboxModule, DialogModule, DropdownModule, InputTextModule, KeyFilterModule} from 'primeng/primeng';
+import {
+  CalendarModule,
+  CheckboxModule,
+  DialogModule,
+  DropdownModule, InputTextareaModule,
+  InputTextModule,
+  KeyFilterModule,
+  RadioButtonModule
+} from 'primeng/primeng';
 import {BasicDialogComponent} from './basic-dialog/basic-dialog.component';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -14,7 +23,10 @@ import {BasicDialogComponent} from './basic-dialog/basic-dialog.component';
     CheckboxModule,
     DropdownModule,
     CalendarModule,
-    KeyFilterModule
+    KeyFilterModule,
+    FormsModule,
+    RadioButtonModule,
+    InputTextareaModule,
   ],
   exports: [BasicDialogComponent]
 })
