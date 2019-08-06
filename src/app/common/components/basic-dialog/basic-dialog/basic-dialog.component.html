@@ -4,11 +4,28 @@
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" >
       <div class="ui-g-6">
         <div class="ui-g-4">
-
+          <label></label>
         </div>
-        <div class="ui-g-8">
-          <input  id="settingName" type="text" pInputText placeholder="请输入设置名称.." >
-          <p-dropdown #addSetType [options]="RoleCodeList" scrollHeight="100px" placeholder="请选择设置类型..."></p-dropdown>
+        <div class="ui-g-8" style="line-height: 3vh">
+          <div>
+            <input  id="settingName" type="text" pInputText placeholder="请输入设置名称.." >
+          </div>
+          <div>
+            <p-dropdown #addSetType [options]="RoleCodeList" scrollHeight="100px" placeholder="请选择设置类型..."></p-dropdown>
+          </div>
+          <div>
+            <p-radioButton type="radio" label="男"  value="男" name="group"  [(ngModel)]="staffAdd.sex"></p-radioButton>
+            <p-radioButton type="radio" label="女"  value="女" name="group" [ngStyle]="{'margin-left':'2vw'}" [(ngModel)]="staffAdd.sex"></p-radioButton>
+          </div>
+          <div>
+            <p-calendar [(ngModel)]="staffAdd.birthday" placeholder="请选择出生日期..." [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"></p-calendar>
+          </div>
+          <div>
+            <textarea id="remarks" type="text" pInputText placeholder="请输入备注..." [(ngModel)]="staffAdd.remarks"></textarea>
+          </div>
+          <div>
+
+          </div>
         </div>
       </div>
     </div>
