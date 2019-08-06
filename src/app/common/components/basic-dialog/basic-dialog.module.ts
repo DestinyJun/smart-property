@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {CalendarModule, CheckboxModule, DialogModule, DropdownModule, InputTextModule} from 'primeng/primeng';
-import {BasicDialogComponent} from './basic-dialog.component';
+import {CalendarModule, CheckboxModule, DialogModule, DropdownModule, InputTextModule, KeyFilterModule} from 'primeng/primeng';
+import {BasicDialogComponent} from './basic-dialog/basic-dialog.component';
+
 
 
 
@@ -12,7 +13,8 @@ import {BasicDialogComponent} from './basic-dialog.component';
     DialogModule,
     CheckboxModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    KeyFilterModule
   ],
   exports: [BasicDialogComponent]
 })
