@@ -4,6 +4,7 @@ import {CouponTotalService} from '../../../common/services/coupon-total.service'
 import {AddCouponTotal, CouponTotal, SearchCoupon} from '../../../common/model/coupon-total.model';
 import {GlobalService} from '../../../common/services/global.service';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
+import {DialogModel} from '../../../common/components/basic-dialog/dialog.model';
 
 @Component({
   selector: 'rbi-coupon-total',
@@ -49,6 +50,8 @@ export class CouponTotalComponent implements OnInit {
   public couponEffectiveTime: any;
   public pastDueOption: any[] = [];
   public auditStatusOption: any[] = [];
+
+  public optionDialog: DialogModel = new DialogModel();
   // public msgs: Message[] = []; // 消息弹窗
   constructor(
     private couponTotalSrv: CouponTotalService,
@@ -243,6 +246,10 @@ export class CouponTotalComponent implements OnInit {
         });
       }
     );
+    this.optionDialog = {
+      type: 'add',
+      title: '添加信息'
+    }
     this.couponTotalAddDialog = true;
     console.log('这里是添加信息');
   }
@@ -389,5 +396,7 @@ export class CouponTotalComponent implements OnInit {
     this.couponSelectOption = [];
     this.roonCodeSelectOption = [];
   }
-
+  public eventClick(e): void {
+      console.log(e);
+  }
 }

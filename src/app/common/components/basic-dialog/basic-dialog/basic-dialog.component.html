@@ -1,38 +1,45 @@
-<div class="basic-dialog">
-  <p-dialog header="信息添加" [(visible)]="dialog"  [width]="800">
+<div class="basic-dialog" *ngIf="dialogOption">
+  <p-dialog [header]="dialogOption.title" [(visible)]="dialog"  [width]="dialogOption.width">
     <!--Content-->
-    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" >
-      <div class="ui-g-6">
+    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'add'">
+      <div class="ui-g-6" *ngFor="let item of dialogOption.dataList">
         <div class="ui-g-4">
-          <label></label>
+          <label>{{item.name}}</label>
         </div>
         <div class="ui-g-8" style="line-height: 3vh">
           <div>
-            <input  id="settingName" type="text" pInputText placeholder="请输入设置名称.." >
+            <input  id="settingName" type="text" pInputText [placeholder]="item.value.input.label"  [pKeyFilter]="item.value.input.filter" [pValidateOnly]="true" [(ngModel)]="item.value.input.value">
           </div>
           <div>
-            <p-dropdown #addSetType [options]="RoleCodeList" scrollHeight="100px" placeholder="请选择设置类型..."></p-dropdown>
+            <p-dropdown  [options]="item.value.dropdown.option" scrollHeight="100px" [placeholder]="item.value.dropdown.label" [(ngModel)]="item.value.dropdown.value"></p-dropdown>
           </div>
           <div>
-            <p-radioButton type="radio" label="男"  value="男" name="group"  [(ngModel)]="staffAdd.sex"></p-radioButton>
-            <p-radioButton type="radio" label="女"  value="女" name="group" [ngStyle]="{'margin-left':'2vw'}" [(ngModel)]="staffAdd.sex"></p-radioButton>
+            <p-radioButton type="radio" [label]="i.label"  [value]="i.value" [name]="i.name"  *ngFor="let i of item.value.radioBox" [ngStyle]="{'margin-left':'2vw'}" [(ngModel)]="i.data"></p-radioButton>
+            <!--<p-radioButton type="radio" [label]="item.label"  value="女" name="group" [ngStyle]="{'margin-left':'2vw'}" ></p-radioButton>-->
           </div>
           <div>
-            <p-calendar [(ngModel)]="staffAdd.birthday" placeholder="请选择出生日期..." [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"></p-calendar>
+            <p-calendar [placeholder]="item.value.date.label" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate" [(ngModel)]="item.value.date.value"></p-calendar>
           </div>
           <div>
-            <textarea id="remarks" type="text" pInputText placeholder="请输入备注..." [(ngModel)]="staffAdd.remarks"></textarea>
+            <textarea id="remarks" type="text" pInputTextarea  [placeholder]="item.value.textBox.label" [rows]="item.value.textBox.row" [cols]="item.value.textBox.col" [(ngModel)]="item.value.textBox.value"></textarea>
           </div>
-          <div>
-
-          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'detail'">
+      <div class="ui-g-6" *ngFor="let item of data.dataList">
+        <div class="ui-g-4">
+          <label>{{item.label}}</label>
+        </div>
+        <div class="ui-g-8" style="line-height: 3vh">
+          <span>{{item.value}}</span>
         </div>
       </div>
     </div>
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
         <button  class="basic-dialog-btn basic-dialog-btn-sure" (click)="SureClick($event)">确认</button>
-        <button  class="basic-dialog-btn basic-dialog-btn-false" (click)="CloseClick()">取消</button>
+        <button  class="basic-dialog-btn basic-dialog-btn-false" (click)="CloseClick($event)">取消</button>
       </div>
     </p-footer>
   </p-dialog>
