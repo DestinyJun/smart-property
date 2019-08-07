@@ -1,40 +1,11 @@
 <div class="basic-dialog" *ngIf="dialogOption">
-  <p-dialog [header]="dialogOption.title" [(visible)]="dialog"  [width]="dialogOption.width">
+  <p-dialog [header]="dialogOption.title" [(visible)]="dialog"  [width]="dialogOption.width" [closable]="false">
     <!--Content-->
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'add'">
-      <div class="ui-g-6" *ngFor="let item of dialogOption.dataList">
-        <div class="ui-g-4">
-          <label>{{item.name}}</label>
-        </div>
-        <div class="ui-g-8" >
-          <div *ngIf="item.type === 'input'">
-            <input  type="text" pInputText  [placeholder]="item.value.input.label"  [pKeyFilter]="item.value.input.filter" [pValidateOnly]="true" [(ngModel)]="dialogData[item.value.input.value]">
-          </div>
-          <div *ngIf="item.type === 'dropdown'" style="line-height: 3vh">
-            <p-dropdown  [options]="item.value.dropdown.option" scrollHeight="100px" [placeholder]="item.value.dropdown.label" [(ngModel)]="item.value.dropdown.value"></p-dropdown>
-          </div>
-          <div *ngIf="item.type === 'radioButton'">
-            <p-radioButton type="radio" [label]="i.label"  [value]="i.value" [name]="i.name"  *ngFor="let i of item.value.radioBox" [ngStyle]="{'margin-left':'2vw'}" [(ngModel)]="dialogData[i.data]"></p-radioButton>
-            <!--<p-radioButton type="radio" [label]="item.label"  value="女" name="group" [ngStyle]="{'margin-left':'2vw'}" ></p-radioButton>-->
-          </div>
-          <div *ngIf="item.type === 'date'">
-            <p-calendar [placeholder]="item.value.date.label" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate" [(ngModel)]="dialogData[item.value.date.value]"></p-calendar>
-          </div>
-          <div *ngIf="item.type === 'textarea'">
-            <textarea id="remarks" type="text" pInputTextarea  [placeholder]="item.value.textBox.label" [rows]="item.value.textBox.row" [cols]="item.value.textBox.col" [(ngModel)]="dialogData[item.value.textBox.value]"></textarea>
-          </div>
-        </div>
-      </div>
+
     </div>
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'detail'">
-      <div class="ui-g-6" *ngFor="let item of data.dataList">
-        <div class="ui-g-4">
-          <label>{{item.label}}</label>
-        </div>
-        <div class="ui-g-8" style="line-height: 3vh">
-          <span>{{item.value}}</span>
-        </div>
-      </div>
+
     </div>
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix" style="text-align: center">

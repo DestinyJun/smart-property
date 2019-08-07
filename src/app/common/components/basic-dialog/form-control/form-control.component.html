@@ -1,0 +1,22 @@
+<div class="form-control" [formGroup]="form" *ngIf="formdata">
+   <div class="ui-g-6" *ngIf="let item of formdata">
+       <div class="ui-g-4">
+        <label [for]="item?.name">{{item.label}}:</label>
+       </div>
+       <div class="ui-g-8" *ngIf="item?.type === 'input'">
+         <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder"/>
+       </div>
+       <div class="ui-g-8" *ngIf="item?.type === 'dropdown'">
+         <p-dropdown [id]="item?.name" scrollHeight="100px" [options]=""  [placeholder]="item?.placeholder" [formControlName]="item?.name"></p-dropdown>
+       </div>
+       <div class="ui-g-8" *ngIf="item?.type === 'date'">
+         <p-calendar  [placeholder]="item?.placeholder" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"  [formControlName]="item?.name"></p-calendar>
+       </div>
+       <div class="ui-g-8" *ngIf="item?.type === 'radio'">
+          <p-radioButton type="radio" label="男"  value="男" name="group"  [formControlName]="item?.name"></p-radioButton>
+       </div>
+       <div class="ui-g-8" *ngIf="item?.type === 'radio'">
+         <p-radioButton type="radio" label="男"  value="男" name="group"  [formControlName]="item?.name"></p-radioButton>
+       </div>
+   </div>
+</div>

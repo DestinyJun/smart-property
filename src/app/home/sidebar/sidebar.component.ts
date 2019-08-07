@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
 import {PanelMenu} from 'primeng/primeng';
 import {NavigationEnd, Router} from '@angular/router';
@@ -169,6 +169,4 @@ export class SidebarComponent implements OnInit , OnChanges, AfterViewInit {
       }
     );
   }
-
-
 }

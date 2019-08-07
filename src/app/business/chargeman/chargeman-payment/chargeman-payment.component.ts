@@ -12,6 +12,7 @@ import {
 import {environment} from '../../../../environments/environment';
 import {GlobalService} from '../../../common/services/global.service';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
+import {LocalStorageService} from '../../../common/services/local-storage.service';
 
 @Component({
   selector: 'rbi-chargeman-payment',
@@ -80,17 +81,34 @@ export class ChargemanPaymentComponent implements OnInit {
   public option: any;
   public phoneErrorToast = true;
   public loadHidden = true;
+  public allData = false;
   // ccRegex: RegExp = /[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
   // public msgs: Message[] = []; // 消息弹窗
   constructor(
     private paymentSrv: ChargePaymentService,
     private confirmationService: ConfirmationService,
     private globalSrv: GlobalService,
-    private  toolSrv: PublicMethedService
+    private  toolSrv: PublicMethedService,
+    private localSrv: LocalStorageService
   ) { }
   ngOnInit() {
-
+    // this.localSrv.getObject('sidebarItem').forEach( v => {
+    //   if (v.title === '收费管理') {
+    //     v.item.forEach( val => {
+    //       if (val.label === '物业缴费') {
+    //         this.allData = true;
+    //       }
+    //     });
+    //   }
+    // });
+    // if (this.allData) {
+    // } else {
+    //   this.allData = false;
+    //   console.log(123);
+    //   this.toolSrv.setToast('error', '操作错误', '您没有该模块的操作权限');
+    // }
     this.paymentInitialization();
+
   }
   // initialization payment
   public  paymentInitialization(): void {

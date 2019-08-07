@@ -10,11 +10,13 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {LoginModule} from './login/login.module';
 import {PersionalModule} from './persional/persional.module';
+import { FormControlComponent } from './common/components/form-control/form-control.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorComponent,
+    FormControlComponent,
   ],
   imports: [
     BrowserModule,
