@@ -247,7 +247,7 @@ export class CouponTotalComponent implements OnInit {
         });
       }
     );
-    this.optionDialog = {
+/*    this.optionDialog = {
       type: 'add',
       title: '添加信息',
       width: '800',
@@ -257,16 +257,26 @@ export class CouponTotalComponent implements OnInit {
       'unitCode', 'unitName', 'couponCode', 'couponName', 'userId', 'surname', 'mobilePhone', 'money', 'effectiveTime', 'couponType',
       'remarks', 'chargeCode'];
     list.forEach( value => {
-      this.form.push({key: value, disabled: true, required: true});
+      if (value === 'surname') {
+        this.form.push({key: value, disabled: false, required: true});
+      } else {
+        this.form.push({key: value, disabled: false, required: true});
+      }
     });
+    console.log(this.SearchOption.village);
     this.formdata = [
-      {label: '小区名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择小区', value: ''},
-      {label: '地块名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择地块名称', value: ''},
+      // {label: '小区名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择小区', value: ''},
+      // {label: '地块名称', type: 'dropdown', name: 'regionCode', option: this.SearchOption.region, placeholder: '请选择地块名称', value: ''},
+      // {label: '楼宇名称', type: 'dropdown', name: 'buildingCode', option: this.SearchOption.building, placeholder: '请选择楼栋名称', value: ''},
+      // {label: '单元名称', type: 'dropdown', name: 'unitCode', option: this.SearchOption.unit, placeholder: '请选择单元名称', value: ''},
+      // {label: '房间编号', type: 'dropdown', name: 'roomCode', option: this.roonCodeSelectOption, placeholder: '请选择房屋编号', value: ''},
+      {label: '客户电话', type: 'input', name: 'mobilePhone', option: '', placeholder: '请输入客户电话..', },
+      {label: '客户名称', type: 'input', name: 'surname', option: '', placeholder: '请输入客户名称..', },
       // {label: ''},
-    ];
+    ];*/
+    this.couponTotalAddDialog = true;
     // this.couponTotalAddDialog = true;
-    // this.couponTotalAddDialog = true;
-    console.log('这里是添加信息');
+    // console.log('这里是添加信息');
   }
   // search userInfo
   public getUserInfo(): void {
@@ -412,9 +422,10 @@ export class CouponTotalComponent implements OnInit {
     this.roonCodeSelectOption = [];
   }
   public eventClick(e): void {
-      console.log(e);
+    for (const eKey in e) {
+      const a = eKey;
+      this.AddcouponTotal[a] = e[eKey];
+    }
+    console.log(this.AddcouponTotal);
   }
-  // public  eventChange(e): void {
-  //     console.log(e);
-  // }
 }

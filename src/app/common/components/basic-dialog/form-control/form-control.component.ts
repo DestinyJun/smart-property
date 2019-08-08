@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {FormValue, FromData} from '../dialog.model';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -11,9 +11,9 @@ export class FormControlComponent implements OnInit, OnChanges {
 
   @Input()
   public formValue: FormValue[];
-  public form: FormGroup;
   @Input()
   public formdata: FromData[];
+  public form: FormGroup;
   public esDate = {
     firstDayOfWeek: 0,
     dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
@@ -25,13 +25,18 @@ export class FormControlComponent implements OnInit, OnChanges {
     clear: '清除'
   };
   constructor() {
-    this.form = this.setFormGroup(this.formValue);
   }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.formdata) {
+      this.form = this.setFormGroup(this.formValue);
+    } else {
+      console.log(this.formdata);
+      console.log(this.formValue);
+    }
   }
 
   public  setFormGroup(data): any {

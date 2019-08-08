@@ -3,22 +3,22 @@
        <div class="ui-g-4">
         <label [for]="item?.name">{{item.label}}:</label>
        </div>
-       <div class="ui-g-8" *ngIf="item?.type === 'input'">
+       <div class="ui-g-8" *ngIf="item?.type === 'input'" style="line-height: 2vh">
          <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder"/>
        </div>
-       <div class="ui-g-8" *ngIf="item?.type === 'dropdown'">
-         <p-dropdown [id]="item?.name" scrollHeight="100px" [options]=""  [placeholder]="item?.placeholder" [formControlName]="item?.name"></p-dropdown>
+       <div class="ui-g-8" *ngIf="item?.type === 'dropdown'"  style="line-height: 2vh">
+         <p-dropdown [id]="item?.name" scrollHeight="100px" [options]="item?.option"  [placeholder]="item?.placeholder" [formControlName]="item?.name"></p-dropdown>
        </div>
-       <div class="ui-g-8" *ngIf="item?.type === 'date'">
+       <div class="ui-g-8" *ngIf="item?.type === 'date'"  style="line-height: 2vh">
          <p-calendar  [placeholder]="item?.placeholder" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"  [formControlName]="item?.name"></p-calendar>
        </div>
-       <div class="ui-g-8" *ngIf="item?.type === 'radio'">
+       <div class="ui-g-8" *ngIf="item?.type === 'radio'"  style="line-height: 2vh">
           <p-radioButton type="radio" label="男"  value="男" name="group"  [formControlName]="item?.name"></p-radioButton>
        </div>
-       <div class="ui-g-8" *ngIf="item?.type === 'textbox'">
+       <div class="ui-g-8" *ngIf="item?.type === 'textbox'"  style="line-height: 2vh">
          <textarea [rows]="item?.value?.row" [cols]="item?.value?.col" pInputTextarea [formControlName]="item?.name"></textarea>
        </div>
-       <div class="ui-g-8" *ngIf="item?.type === 'checkbox'">
+       <div class="ui-g-8" *ngIf="item?.type === 'checkbox'"  style="line-height: 2vh">
          <p-checkbox [label]="i?.label" [name]="i?.name" [value]="i?.value" [formControl]="form.controls[item?.name]" *ngFor="let i of item?.value"></p-checkbox>
        </div>
    </div>
