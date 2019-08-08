@@ -36,7 +36,7 @@ export class CouponTotalComponent implements OnInit {
   public loadingHide = true;
   // public couponTotalSeachData: any;
   public form: FormValue[] = [];
-  public formdata: FormData[];
+  public formdata: any[];
   public nowPage = 1;
   public SearchOption = {
     village: [],
@@ -260,7 +260,8 @@ export class CouponTotalComponent implements OnInit {
       this.form.push({key: value, disabled: true, required: true});
     });
     this.formdata = [
-      // {label: '小区名称', type: 'dropdown', name: 'villageCode'},
+      {label: '小区名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择小区', value: ''},
+      {label: '地块名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择地块名称', value: ''},
       // {label: ''},
     ];
     // this.couponTotalAddDialog = true;
