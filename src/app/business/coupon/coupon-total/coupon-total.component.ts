@@ -4,7 +4,7 @@ import {CouponTotalService} from '../../../common/services/coupon-total.service'
 import {AddCouponTotal, CouponTotal, SearchCoupon} from '../../../common/model/coupon-total.model';
 import {GlobalService} from '../../../common/services/global.service';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
-import {DialogModel} from '../../../common/components/basic-dialog/dialog.model';
+import {DialogModel, FormValue} from '../../../common/components/basic-dialog/dialog.model';
 
 @Component({
   selector: 'rbi-coupon-total',
@@ -35,6 +35,8 @@ export class CouponTotalComponent implements OnInit {
   public option: any;
   public loadingHide = true;
   // public couponTotalSeachData: any;
+  public form: FormValue[] = [];
+  public formdata: FormData[];
   public nowPage = 1;
   public SearchOption = {
     village: [],
@@ -251,6 +253,16 @@ export class CouponTotalComponent implements OnInit {
       width: '800',
 
     };
+    const list = ['organizationId', 'villageCode',  'villageName', 'regionCode', 'regionName', 'buildingCode', 'buildingName',
+      'unitCode', 'unitName', 'couponCode', 'couponName', 'userId', 'surname', 'mobilePhone', 'money', 'effectiveTime', 'couponType',
+      'remarks', 'chargeCode'];
+    list.forEach( value => {
+      this.form.push({key: value, disabled: true, required: true});
+    });
+    this.formdata = [
+      // {label: '小区名称', type: 'dropdown', name: 'villageCode'},
+      // {label: ''},
+    ];
     // this.couponTotalAddDialog = true;
     // this.couponTotalAddDialog = true;
     console.log('这里是添加信息');

@@ -11,7 +11,9 @@ import { FormControlComponent } from './form-control/form-control.component';
 
 
 @NgModule({
-  declarations: [BasicDialogComponent, FormControlComponent],
+  declarations: [
+    BasicDialogComponent,
+    FormControlComponent],
   imports: [
     CommonModule,
     DialogModule,
@@ -21,7 +23,7 @@ import { FormControlComponent } from './form-control/form-control.component';
     CalendarModule,
     CheckboxModule,
     RadioButtonModule,
-    InputTextareaModule
+    InputTextareaModule,
   ],
   exports: [BasicDialogComponent]
 })

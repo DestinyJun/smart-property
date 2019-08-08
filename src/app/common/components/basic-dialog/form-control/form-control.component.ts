@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FromData} from '../dialog.model';
-import {FormGroup} from '@angular/forms';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {FormValue, FromData} from '../dialog.model';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'rbi-form-control',
   templateUrl: './form-control.component.html',
   styleUrls: ['./form-control.component.less']
 })
-export class FormControlComponent implements OnInit {
+export class FormControlComponent implements OnInit, OnChanges {
 
   @Input()
+  public formValue: FormValue[];
   public form: FormGroup;
   @Input()
   public formdata: FromData[];
@@ -23,9 +24,28 @@ export class FormControlComponent implements OnInit {
     today: '今天',
     clear: '清除'
   };
-  constructor() { }
+  constructor() {
+    this.form = this.setFormGroup(this.formValue);
+  }
 
   ngOnInit() {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+  }
+
+  public  setFormGroup(data): any {
+    const group: any = {};
+    data.forEach( val => {
+      if (val.disabled) {
+        group[val.key] = new FormControl({value: val.value || '', disabled: true});
+      } else {
+        group[val.key] = new FormControl({value: val.value || '', disabled: false});
+      }
+      if (val.required) {
+        group[val.key].validator = Validators.required;
+      }
+    });
+    return new FormGroup(group);
+  }
 }

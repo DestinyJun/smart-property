@@ -9,4 +9,10 @@ export class FromData {
   name?: any;
   placeholder?: any;
   option?: any;
+  value?: any;
+}
+export class FormValue {
+  key: any;
+  disabled?: any;
+  required?: any;
 }

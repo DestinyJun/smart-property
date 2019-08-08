@@ -353,7 +353,7 @@
       </div>
     </p-footer>
   </p-dialog>
-  <rbi-basic-dialog [dialogOption]="optionDialog" (eventClick)="eventClick($event)"></rbi-basic-dialog>
+  <rbi-basic-dialog [dialogOption]="optionDialog" (eventClick)="eventClick($event)" [formdata]="" [form]="form"></rbi-basic-dialog>
   <rbi-paging [option]="option" (pageClick)="nowpageEventHandle($event)"></rbi-paging>
   <rbi-loading [hidden]="loadingHide" style="position: absolute;left: 45vw;top:40vh;z-index: 99999"></rbi-loading>
 </div>

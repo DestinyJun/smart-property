@@ -2,7 +2,7 @@
   <p-dialog [header]="dialogOption.title" [(visible)]="dialog"  [width]="dialogOption.width" [closable]="false">
     <!--Content-->
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'add'">
-
+        <rbi-form-control [formValue]="form" [formdata]="formdata"></rbi-form-control>
     </div>
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'detail'">
 

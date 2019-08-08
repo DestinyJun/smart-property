@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {DialogModel} from '../dialog.model';
+import {DialogModel, FormValue, FromData} from '../dialog.model';
 import {FormGroup} from '@angular/forms';
 
 @Component({
@@ -14,9 +14,10 @@ export class BasicDialogComponent implements OnInit, OnChanges {
   public dialogOption: DialogModel = new DialogModel();
   @Output()
   public eventClick = new EventEmitter<number>();
-  // @Input()
-  // public form: FormGroup;
-
+  @Input()
+  public form: FormValue[];
+  @Input()
+  public formdata: FromData[];
   constructor() { }
 
   ngOnInit() {
