@@ -25,7 +25,10 @@
               <textarea [rows]="item?.value?.row" [cols]="item?.value?.col" pInputTextarea [formControlName]="item?.name"></textarea>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'checkbox'"  style="line-height: 2vh">
-              <p-checkbox [label]="i?.label" [name]="i?.name" [value]="i?.value" [formControl]="form.controls[item?.name]" *ngFor="let i of item?.value"></p-checkbox>
+              <p-checkbox [label]="i?.label" [name]="i?.name" [value]="i?.value" [formControl]="formContrl.controls[item?.name]" *ngFor="let i of item?.value"></p-checkbox>
+            </div>
+            <div class="ui-g-8" *ngIf="item?.type === 'tree'"  style="line-height: 2vh">
+              <!--<p-tree [value]="item?.tree" (onNodeExpand)="nodeExpand($event)" [style]="{'max-height':'200px','overflow':'auto'}"></p-tree>-->
             </div>
           </div>
         </div>

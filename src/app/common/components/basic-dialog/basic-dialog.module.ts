@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   CalendarModule, CheckboxModule,
-  DialogModule, DropdownModule, InputTextareaModule, InputTextModule, RadioButtonModule,
+  DialogModule, DropdownModule, InputTextareaModule, InputTextModule, RadioButtonModule, TreeModule,
 } from 'primeng/primeng';
 import {BasicDialogComponent} from './basic-dialog/basic-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormControlComponent } from './form-control/form-control.component';
-
 
 
 @NgModule({
@@ -24,6 +23,7 @@ import { FormControlComponent } from './form-control/form-control.component';
     CheckboxModule,
     RadioButtonModule,
     InputTextareaModule,
+    TreeModule,
   ],
   exports: [BasicDialogComponent]
 })

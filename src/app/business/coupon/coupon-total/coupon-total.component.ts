@@ -247,7 +247,7 @@ export class CouponTotalComponent implements OnInit {
         });
       }
     );
-/*    this.optionDialog = {
+    this.optionDialog = {
       type: 'add',
       title: '添加信息',
       width: '800',
@@ -273,8 +273,8 @@ export class CouponTotalComponent implements OnInit {
       {label: '客户电话', type: 'input', name: 'mobilePhone', option: '', placeholder: '请输入客户电话..', },
       {label: '客户名称', type: 'input', name: 'surname', option: '', placeholder: '请输入客户名称..', },
       // {label: ''},
-    ];*/
-    this.couponTotalAddDialog = true;
+    ];
+    // this.couponTotalAddDialog = true;
     // this.couponTotalAddDialog = true;
     // console.log('这里是添加信息');
   }
