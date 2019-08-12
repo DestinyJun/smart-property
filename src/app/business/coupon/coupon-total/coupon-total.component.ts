@@ -4,7 +4,9 @@ import {CouponTotalService} from '../../../common/services/coupon-total.service'
 import {AddCouponTotal, CouponTotal, SearchCoupon} from '../../../common/model/coupon-total.model';
 import {GlobalService} from '../../../common/services/global.service';
 import {PublicMethedService} from '../../../common/public/public-methed.service';
-import {DialogModel, FormValue} from '../../../common/components/basic-dialog/dialog.model';
+import {DataTree, DialogModel, FormValue} from '../../../common/components/basic-dialog/dialog.model';
+import {isFakeMousedownFromScreenReader} from '@angular/cdk/typings/esm5/a11y';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'rbi-coupon-total',
@@ -36,6 +38,7 @@ export class CouponTotalComponent implements OnInit {
   public loadingHide = true;
   // public couponTotalSeachData: any;
   public form: FormValue[] = [];
+  public formgroup: FormGroup;
   public formdata: any[];
   public nowPage = 1;
   public SearchOption = {
@@ -52,8 +55,9 @@ export class CouponTotalComponent implements OnInit {
   public couponEffectiveTime: any;
   public pastDueOption: any[] = [];
   public auditStatusOption: any[] = [];
-
+  public datatree: any;
   public optionDialog: DialogModel = new DialogModel();
+
   // public msgs: Message[] = []; // 消息弹窗
   constructor(
     private couponTotalSrv: CouponTotalService,
@@ -65,6 +69,7 @@ export class CouponTotalComponent implements OnInit {
   ngOnInit() {
     this.couponTotalInitialization();
   }
+
   // initialization houseinfo
   public couponTotalInitialization(): void {
     console.log('这里是信息的初始化');
@@ -85,23 +90,23 @@ export class CouponTotalComponent implements OnInit {
     ];
     this.loadingHide = false;
     this.toolSrv.getAdminStatus('PAST_DUE', (e) => {
-      e.forEach( v => {
+      e.forEach(v => {
         this.pastDueOption.push({label: v.settingName, value: v.settingCode});
       });
     });
     this.toolSrv.getAdminStatus('AUDIT_STATUS', (e) => {
-      e.forEach( v => {
+      e.forEach(v => {
         this.auditStatusOption.push({label: v.settingName, value: v.settingCode});
       });
     });
     const page = setInterval(() => {
       if (this.pastDueOption.length > 0 && this.auditStatusOption.length > 0) {
-          this.couponTotalSrv.queryCouponPageData({pageNo: this.nowPage, pageSize: 10}).subscribe(
+        this.couponTotalSrv.queryCouponPageData({pageNo: this.nowPage, pageSize: 10}).subscribe(
           (value) => {
             this.loadingHide = true;
             clearInterval(page);
             if (value.status === '1000') {
-              value.data.contents.forEach( h => {
+              value.data.contents.forEach(h => {
                 this.pastDueOption.forEach(v => {
                   if (h.pastDue.toString() === v.value) {
                     h.pastDue = v.label;
@@ -115,28 +120,37 @@ export class CouponTotalComponent implements OnInit {
               });
               this.couponTotalTableContent = value.data.contents;
               this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
-            }  else  {
+            } else {
               this.toolSrv.setToast('error', '请求成功', value.message);
             }
           }
         );
-       }
-      }, 100);
+      }
+    }, 100);
 
     this.couponTotalTableTitleStyle = {background: '#282A31', color: '#DEDEDE', height: '6vh'};
     this.globalSrv.queryVillageInfo({}).subscribe(
       (data) => {
         console.log(data);
         if (data.status === '1000') {
-          data.data.forEach( v => {
+          data.data.forEach(v => {
             this.SearchOption.village.push({label: v.villageName, value: v.villageCode});
           });
         }
       }
     );
+    this.globalSrv.queryTVillageTree().subscribe(
+      value => {
+        console.log(value);
+        if (value.status === '1000') {
+          this.datatree = value.data;
+        }
+      }
+    )
   }
+
   // query region
-  public  VillageChange(e): void {
+  public VillageChange(e): void {
     this.SearchCoupon.villageCode = '';
     this.SearchCoupon.regionCode = '';
     this.SearchCoupon.buildingCode = '';
@@ -151,14 +165,15 @@ export class CouponTotalComponent implements OnInit {
     this.globalSrv.queryRegionInfo({villageCode: e.value}).subscribe(
       (value) => {
         console.log(value);
-        value.data.forEach( v => {
-          this. SearchOption.region.push({label: v.regionName, value: v.regionCode});
+        value.data.forEach(v => {
+          this.SearchOption.region.push({label: v.regionName, value: v.regionCode});
         });
       }
     );
   }
+
   // query building
-  public  regionChange(e): void {
+  public regionChange(e): void {
     this.SearchCoupon.regionCode = '';
     this.SearchCoupon.buildingCode = '';
     this.SearchCoupon.unitCode = '';
@@ -170,14 +185,15 @@ export class CouponTotalComponent implements OnInit {
     this.globalSrv.queryBuilingInfo({regionCode: e.value}).subscribe(
       (value) => {
         console.log(value);
-        value.data.forEach( v => {
-          this. SearchOption.building.push({label: v.buildingName, value: v.buildingCode});
+        value.data.forEach(v => {
+          this.SearchOption.building.push({label: v.buildingName, value: v.buildingCode});
         });
       }
     );
   }
+
   // query unit
-  public  buildingChange(e): void {
+  public buildingChange(e): void {
     this.SearchCoupon.buildingCode = '';
     this.SearchCoupon.unitCode = '';
     this.SearchOption.unit = [];
@@ -187,14 +203,15 @@ export class CouponTotalComponent implements OnInit {
     this.globalSrv.queryunitInfo({buildingCode: e.value}).subscribe(
       (value) => {
         console.log(value);
-        value.data.forEach( v => {
-          this. SearchOption.unit.push({label: v.unitName, value: v.unitCode});
+        value.data.forEach(v => {
+          this.SearchOption.unit.push({label: v.unitName, value: v.unitCode});
         });
       }
     );
   }
+
   // query roomCode
-  public  unitChange(e): void {
+  public unitChange(e): void {
     this.SearchCoupon.unitCode = '';
     this.SearchCoupon.unitCode = e.value;
     this.roonCodeSelectOption = [];
@@ -202,7 +219,7 @@ export class CouponTotalComponent implements OnInit {
 
     this.couponTotalSrv.queryRoomCode({unitCode: e.value}).subscribe(
       value => {
-        value.data.forEach( v => {
+        value.data.forEach(v => {
           this.roonCodeSelectOption.push({label: v.roomCode, value: v.roomCode});
           this.SearchOption.room.push({label: v.roomCode, value: v.roomCode});
         });
@@ -210,6 +227,7 @@ export class CouponTotalComponent implements OnInit {
     );
 
   }
+
   // condition search click
   public couponTotalSearchClick(): void {
     if (this.SearchCoupon.buildingCode === '' && this.SearchCoupon.mobilePhone === undefined) {
@@ -237,12 +255,13 @@ export class CouponTotalComponent implements OnInit {
       );
     }
   }
+
   // add coupon
   public couponTotalAddClick(): void {
     this.couponSelectOption = [];
     this.couponTotalSrv.queryCouponList({}).subscribe(
       value => {
-        value.data.forEach( val => {
+        value.data.forEach(val => {
           this.couponSelectOption.push({label: val.couponName, value: val.couponCode});
         });
       }
@@ -253,73 +272,86 @@ export class CouponTotalComponent implements OnInit {
       width: '800',
 
     };
-    const list = ['organizationId', 'villageCode',  'villageName', 'regionCode', 'regionName', 'buildingCode', 'buildingName',
-      'unitCode', 'unitName', 'couponCode', 'couponName', 'userId', 'surname', 'mobilePhone', 'money', 'effectiveTime', 'couponType',
+
+    const list = ['villageCode', 'villageName', 'regionCode', 'regionName', 'buildingCode', 'buildingName', 'unitCode', 'unitName',
+      'roomCode', 'couponCode', 'couponName', 'userId', 'surname', 'mobilePhone', 'money', 'effectiveTime', 'couponType',
       'remarks', 'chargeCode'];
-    list.forEach( value => {
-      if (value === 'surname') {
+    list.forEach(value => {
+      if (value === 'surname' || value === 'effectiveTime' ||  value === 'money' || value === 'couponType') {
         this.form.push({key: value, disabled: false, required: true});
       } else {
         this.form.push({key: value, disabled: false, required: true});
       }
     });
-    console.log(this.SearchOption.village);
+    this.formgroup = this.toolSrv.setFormGroup(this.form);
+    console.log(this.formgroup.value);
     this.formdata = [
-      // {label: '小区名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择小区', value: ''},
-      // {label: '地块名称', type: 'dropdown', name: 'regionCode', option: this.SearchOption.region, placeholder: '请选择地块名称', value: ''},
-      // {label: '楼宇名称', type: 'dropdown', name: 'buildingCode', option: this.SearchOption.building, placeholder: '请选择楼栋名称', value: ''},
-      // {label: '单元名称', type: 'dropdown', name: 'unitCode', option: this.SearchOption.unit, placeholder: '请选择单元名称', value: ''},
-      // {label: '房间编号', type: 'dropdown', name: 'roomCode', option: this.roonCodeSelectOption, placeholder: '请选择房屋编号', value: ''},
-      {label: '客户电话', type: 'input', name: 'mobilePhone', option: '', placeholder: '请输入客户电话..', },
-      {label: '客户名称', type: 'input', name: 'surname', option: '', placeholder: '请输入客户名称..', },
-      // {label: ''},
-    ];
+    {label: '房间号', type: 'tree', name: 'roomCode', option: '', placeholder: '请选择房间', value: {datatree: this.datatree}},
+    // {label: '小区名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择小区', value: ''},
+    // {label: '地块名称', type: 'dropdown', name: 'regionCode', option: this.SearchOption.region, placeholder: '请选择地块名称', value: ''},
+    // {label: '楼宇名称', type: 'dropdown', name: 'buildingCode', option: this.SearchOption.building, placeholder: '请选择楼栋名称', value: ''},
+    // {label: '单元名称', type: 'dropdown', name: 'unitCode', option: this.SearchOption.unit, placeholder: '请选择单元名称', value: ''},
+    // {label: '房间编号', type: 'dropdown', name: 'roomCode', option: this.roonCodeSelectOption, placeholder: '请选择房屋编号', value: ''},
+    {label: '客户电话', type: 'input', name: 'mobilePhone', option: '', placeholder: '请输入客户电话..'},
+    {label: '客户名称', type: 'input', name: 'surname', option: '', placeholder: '请输入客户名称..', disable: true},
+    {label: '优惠卷', type: 'dropdown', name: 'couponCode', option: this.couponSelectOption, placeholder: '请选择优惠卷..', value: 'couponName'},
+    {label: '优惠金额', type: 'input', name: 'money', option: '', placeholder: '请输入优惠金额..'},
+    {label: '有效时长', type: 'input', name: 'effectiveTime', option: '', placeholder: '请输入有效时长..'},
+    {label: '优惠卷类型', type: 'input', name: 'couponType', option: '', placeholder: '请输入优惠卷类型..'},
+    {label: '备注', type: 'textbox', name: 'remarks', option: '', placeholder: '备注..', value: {row: 2, col: 6}},
+    // {label: ''},
+  ];
     // this.couponTotalAddDialog = true;
     // this.couponTotalAddDialog = true;
     // console.log('这里是添加信息');
   }
-  // search userInfo
-  public getUserInfo(): void {
-      if (this.AddcouponTotal.mobilePhone !== null && this.AddcouponTotal.roomCode !== null) {
-         this.couponTotalSrv.queryCouponUserInfo({roomCode: this.AddcouponTotal.roomCode, mobilePhone: this.AddcouponTotal.mobilePhone}).subscribe(
-           value => {
-             this.AddcouponTotal.surname = value.data.customerInfoDO.surname;
-             this.AddcouponTotal.userId = value.data.customerInfoDO.userId;
-           }
-         );
-      }
-  }
-  // Choose a coupon
-  public couponSelectChange(e): void {
-    this.AddcouponTotal.couponName = e.originalEvent.target.innerText;
-    this.couponTotalSrv.queryCouponInfo({couponCode: this.AddcouponTotal.couponCode}).subscribe(
-      value => {
-        console.log(value);
-        this.AddcouponTotal.effectiveTime = value.data.effectiveTime;
-        this.AddcouponTotal.money = value.data.money;
-        this.couponMoney = '￥' + this.AddcouponTotal.money;
-        this.AddcouponTotal.organizationId = value.data.organizationId;
-        this.AddcouponTotal.chargeCode = value.data.chargeCode;
-        if (value.data.effectiveTime === 0 ) {
-          this.couponEffectiveTime = '无期限';
-        } else  {
-          this.couponEffectiveTime = value.data.effectiveTime + '天';
-        }
-        this.AddcouponTotal.couponType = value.data.couponType;
-        this.couponTotalSrv.queryCouponType({}).subscribe(
-          val => {
-            console.log(val);
-            val.data.forEach( v => {
-              if (this.AddcouponTotal.couponType === v.settingCode) {
-                this.couponTypeName = v.settingName;
-              }
-            });
-          }
-        );
-      }
-    );
-    console.log(this.AddcouponTotal.couponName);
-  }
+
+  // // search userInfo
+  // public getUserInfo(): void {
+  //   if (this.AddcouponTotal.mobilePhone !== null && this.AddcouponTotal.roomCode !== null) {
+  //     this.couponTotalSrv.queryCouponUserInfo({
+  //       roomCode: this.AddcouponTotal.roomCode,
+  //       mobilePhone: this.AddcouponTotal.mobilePhone
+  //     }).subscribe(
+  //       value => {
+  //         this.AddcouponTotal.surname = value.data.customerInfoDO.surname;
+  //         this.AddcouponTotal.userId = value.data.customerInfoDO.userId;
+  //       }
+  //     );
+  //   }
+  // }
+
+  // // Choose a coupon
+  // public couponSelectChange(e): void {
+  //   this.AddcouponTotal.couponName = e.originalEvent.target.innerText;
+  //   this.couponTotalSrv.queryCouponInfo({couponCode: this.AddcouponTotal.couponCode}).subscribe(
+  //     value => {
+  //       this.AddcouponTotal.effectiveTime = value.data.effectiveTime;
+  //       this.AddcouponTotal.money = value.data.money;
+  //       this.couponMoney = '￥' + this.AddcouponTotal.money;
+  //       this.AddcouponTotal.organizationId = value.data.organizationId;
+  //       this.AddcouponTotal.chargeCode = value.data.chargeCode;
+  //       if (value.data.effectiveTime === 0) {
+  //         this.couponEffectiveTime = '无期限';
+  //       } else {
+  //         this.couponEffectiveTime = value.data.effectiveTime + '天';
+  //       }
+  //       this.AddcouponTotal.couponType = value.data.couponType;
+  //       this.couponTotalSrv.queryCouponType({}).subscribe(
+  //         val => {
+  //           console.log(val);
+  //           val.data.forEach(v => {
+  //             if (this.AddcouponTotal.couponType === v.settingCode) {
+  //               this.couponTypeName = v.settingName;
+  //             }
+  //           });
+  //         }
+  //       );
+  //     }
+  //   );
+  //   console.log(this.AddcouponTotal.couponName);
+  // }
+
   // sure add houseinfo
   public couponTotalAddSureClick(): void {
     this.toolSrv.setConfirmation('增加', '增加', () => {
@@ -337,17 +369,18 @@ export class CouponTotalComponent implements OnInit {
       );
     });
   }
+
   // detail couponTotalInfo
   public couponTotalDetailClick(e): void {
     this.couponTotalDetail = e;
-    if (e.effectiveTime === 0 ) {
+    if (e.effectiveTime === 0) {
       this.couponEffectiveTime = '无期限';
-    } else  {
+    } else {
       this.couponEffectiveTime = e.effectiveTime + '天';
     }
     this.couponTotalSrv.queryCouponType({}).subscribe(
       val => {
-        val.data.forEach( v => {
+        val.data.forEach(v => {
           if (e.couponType === v.settingCode) {
             this.couponTypeName = v.settingName;
           }
@@ -355,21 +388,21 @@ export class CouponTotalComponent implements OnInit {
       }
     );
     this.toolSrv.getAdminStatus('USE_STATUS', (value) => {
-      value.data.forEach( v => {
+      value.data.forEach(v => {
         if (e.usageState.toString() === v.settingCode) {
           this.couponTotalDetail.usageState = v.settingName;
         }
       });
     });
     this.toolSrv.getAdminStatus('PAST_DUE', (value) => {
-      value.data.forEach( v => {
+      value.data.forEach(v => {
         if (e.pastDue.toString() === v.settingCode) {
           this.couponTotalDetail.pastDue = v.settingName;
         }
       });
     });
     this.toolSrv.getAdminStatus('AUDIT_STATUS', (value) => {
-      value.data.forEach( v => {
+      value.data.forEach(v => {
         if (e.auditStatus.toString() === v.settingCode) {
           this.couponTotalDetail.auditStatus = v.settingName;
         }
@@ -378,25 +411,27 @@ export class CouponTotalComponent implements OnInit {
     console.log(e);
     this.couponTotalDetailDialog = true;
   }
+
   // delete coupon
   public couponTotalDeleteClick(): void {
     if (this.couponTotalSelect === undefined || this.couponTotalSelect.length === 0) {
       this.toolSrv.setToast('error', '操作错误', '请选择需要删除的项');
     } else {
-      this.toolSrv.setConfirmation('删除',  '删除这' + this.couponTotalSelect.length + '项', () => {
-        this.couponTotalSelect.forEach( v => {
+      this.toolSrv.setConfirmation('删除', '删除这' + this.couponTotalSelect.length + '项', () => {
+        this.couponTotalSelect.forEach(v => {
           this.deleteIds.push(v.id);
         });
         this.couponTotalSrv.deleteCouponInfo({ids: this.deleteIds.join(',')}).subscribe(
-        value => {
-          console.log(value);
-          this.toolSrv.setToast('success', '操作成功', value.message);
-          this.couponTotalInitialization();
-        }
-       );
+          value => {
+            console.log(value);
+            this.toolSrv.setToast('success', '操作成功', value.message);
+            this.couponTotalInitialization();
+          }
+        );
       });
     }
   }
+
   // Paging request
   public nowpageEventHandle(event: any): void {
     this.loadingHide = false;
@@ -411,6 +446,7 @@ export class CouponTotalComponent implements OnInit {
     );
     this.couponTotalSelect = [];
   }
+
   // clear data
   public clearData(): void {
     this.AddcouponTotal = new AddCouponTotal();
@@ -421,11 +457,48 @@ export class CouponTotalComponent implements OnInit {
     this.couponSelectOption = [];
     this.roonCodeSelectOption = [];
   }
+
   public eventClick(e): void {
-    for (const eKey in e) {
-      const a = eKey;
-      this.AddcouponTotal[a] = e[eKey];
+    if (e.roomCode !== undefined) {
+      for (const eKey in e) {
+        const a = eKey;
+        this.AddcouponTotal[a] = e[eKey];
+      }
+      console.log(this.AddcouponTotal);
+    } else {
+      console.log(e);
     }
-    console.log(this.AddcouponTotal);
+  }
+
+  public blurClick(e): void {
+    this.formgroup = e.value;
+    if (e.name === 'mobilePhone') {
+      this.couponTotalSrv.queryCouponUserInfo({mobilePhone: this.formgroup.value[e.name]}).subscribe(
+        value => {
+          if (value.status === '1000') {
+            if (value.data.customerInfoDO) {
+              this.formgroup.patchValue({surname: value.data.customerInfoDO.surname, userId: value.data.customerInfoDO.userId});
+            }
+          }
+        }
+      );
+    } else if (e.name === 'couponCode') {
+      this.couponTotalSrv.queryCouponInfo({couponCode: this.formgroup.value.couponCode}).subscribe(
+        value => {
+          this.formgroup.patchValue({effectiveTime: value.data.effectiveTime, money: value.data.money});
+          this.couponTotalSrv.queryCouponType({}).subscribe(
+            val => {
+              val.data.forEach(v => {
+                if (value.data.couponType === v.settingCode) {
+                  this.formgroup.patchValue({couponType: v.settingName});
+                  console.log(this.formgroup);
+                }
+              });
+
+            }
+          );
+        }
+      );
+    }
   }
 }

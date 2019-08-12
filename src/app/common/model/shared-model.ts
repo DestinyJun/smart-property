@@ -14,3 +14,8 @@ export class TreeNode {
   udt?: any;
   children?: TreeNode[];
 }
+export class TreeNodes {
+  value?: any;
+  label?: any;
+  children?: TreeNodes[];
+}

@@ -10,10 +10,10 @@
               <label [for]="item?.name">{{item.label}}:</label>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'input'" style="line-height: 2vh">
-              <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder"/>
+              <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (blur)="inputBlur(item?.name)"/>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'dropdown'"  style="line-height: 2vh">
-              <p-dropdown [id]="item?.name" scrollHeight="100px" [options]="item?.option"  [placeholder]="item?.placeholder" [formControlName]="item?.name"></p-dropdown>
+              <p-dropdown [id]="item?.name" scrollHeight="100px" [options]="item?.option"  [placeholder]="item?.placeholder" [formControlName]="item?.name" (onChange)="dataChange(item?.name, item?.value, item?.option)"></p-dropdown>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'date'"  style="line-height: 2vh">
               <p-calendar  [placeholder]="item?.placeholder" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"  [formControlName]="item?.name"></p-calendar>
@@ -22,13 +22,13 @@
               <p-radioButton type="radio" label="男"  value="男" name="group"  [formControlName]="item?.name"></p-radioButton>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'textbox'"  style="line-height: 2vh">
-              <textarea [rows]="item?.value?.row" [cols]="item?.value?.col" pInputTextarea [formControlName]="item?.name"></textarea>
+              <textarea [rows]="item?.value?.row" [cols]="item?.value?.col" pInputTextarea [formControlName]="item?.name" [placeholder]="item?.placeholder"></textarea>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'checkbox'"  style="line-height: 2vh">
               <p-checkbox [label]="i?.label" [name]="i?.name" [value]="i?.value" [formControl]="formContrl.controls[item?.name]" *ngFor="let i of item?.value"></p-checkbox>
             </div>
             <div class="ui-g-8" *ngIf="item?.type === 'tree'"  style="line-height: 2vh">
-              <!--<p-tree [value]="item?.tree" (onNodeExpand)="nodeExpand($event)" [style]="{'max-height':'200px','overflow':'auto'}"></p-tree>-->
+              <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (click)="dataTreeClick(item?.name, item?.value?.datatree)"/>
             </div>
           </div>
         </div>
@@ -41,6 +41,26 @@
       <div class="ui-dialog-buttonpane ui-helper-clearfix" style="text-align: center">
         <button  class="basic-dialog-btn basic-dialog-btn-sure" (click)="SureClick()">确认</button>
         <button  class="basic-dialog-btn basic-dialog-btn-false" (click)="CloseClick()">取消</button>
+      </div>
+    </p-footer>
+  </p-dialog>
+  <p-dialog [(visible)]="treeDialog" [responsive]="true" showEffect="fade" [maximizable]="true" [baseZIndex]="10000" [modal]="true" [width]="350" [height]="400">
+    <div class="ui-g ui-fluid">
+       <div class="ui-g-12">
+         <p-scrollPanel [style]="{width: '100%', height: '300px'}">
+           <p-tree
+             [value]="dataTrees"
+             [(selection)]="dataTree"
+             selectionMode="single"
+             (onNodeSelect)="treeOnNodeSelect($event)">
+           </p-tree>
+         </p-scrollPanel>
+       </div>
+    </div>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix" style="text-align: center">
+        <button  class="basic-dialog-btn basic-dialog-btn-sure" style="width: 4vw" (click)="dataTreeSureClick()">确认</button>
+        <button  class="basic-dialog-btn basic-dialog-btn-false" style="width: 4vw" (click)="treeDialog = false">取消</button>
       </div>
     </p-footer>
   </p-dialog>

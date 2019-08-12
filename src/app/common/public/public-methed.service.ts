@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {GlobalService} from '../services/global.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -181,5 +182,20 @@ export class PublicMethedService {
       reject: () => {
       }
     });
+  }
+  // Create formGroup
+  public  setFormGroup(data): any {
+    const group: any = {};
+    data.forEach( val => {
+      if (val.disabled) {
+        group[val.key] = new FormControl({value: val.value || '', disabled: true});
+      } else {
+        group[val.key] = new FormControl({value: val.value || '', disabled: false});
+      }
+      if (val.required) {
+        group[val.key].validator = Validators.required;
+      }
+    });
+    return new FormGroup(group);
   }
 }

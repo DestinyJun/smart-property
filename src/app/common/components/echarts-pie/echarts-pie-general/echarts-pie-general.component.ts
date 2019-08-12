@@ -12,15 +12,7 @@ export class EchartsPieGeneralComponent implements OnInit {
   public option: any;
   constructor() { }
   ngOnInit() {
-    // var lineData = ['600','600','600','600','600','600','600'];
-    // var barData = [];
-    // for (var i = 0; i < 7; i++) {
-    //
-    //   var b = Math.random() * 500;
-    //   var d = Math.random() * 300;
-    //   barData.push(b);
-    //   var date = ['周一','周二','周三','周四','周五','周六','周日'];
-    // }
+
     this.option = {
       backgroundColor: '#33353C',
       grid: {

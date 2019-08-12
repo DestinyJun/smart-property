@@ -849,10 +849,4 @@ export class BfOwnerComponent implements OnInit {
       }
     }, 400);
   }
-  // public funcChina(obj) {
-  //   if (/.*[\u4e00-\u9fa5]+.*$/.test(obj)) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 }
