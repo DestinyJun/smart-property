@@ -1,42 +1,48 @@
 <div class="basic-dialog" *ngIf="dialogOption">
-  <p-dialog [header]="dialogOption.title" [(visible)]="dialog"  [width]="dialogOption.width" [closable]="false">
+  <p-dialog [header]="dialogOption.title" [(visible)]="dialogOption.dialog"  [width]="dialogOption.width" [closable]="false">
     <!--Content-->
-    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'add'">
-      <div class="ui-g-12">
-        <!--<rbi-form-control [formValue]="form" [formdata]="formdata"></rbi-form-control>-->
-        <div class="form-control" [formGroup]="formContrl" *ngIf="formdata">
-          <div class="ui-g-6" *ngFor="let item of formdata">
-            <div class="ui-g-4">
-              <label [for]="item?.name">{{item.label}}:</label>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'input'" style="line-height: 2vh">
-              <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (blur)="inputBlur(item?.name)"/>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'dropdown'"  style="line-height: 2vh">
-              <p-dropdown [id]="item?.name" scrollHeight="100px" [options]="item?.option"  [placeholder]="item?.placeholder" [formControlName]="item?.name" (onChange)="dataChange(item?.name, item?.value, item?.option)"></p-dropdown>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'date'"  style="line-height: 2vh">
-              <p-calendar  [placeholder]="item?.placeholder" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"  [formControlName]="item?.name"></p-calendar>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'radio'"  style="line-height: 2vh">
-              <p-radioButton type="radio" label="男"  value="男" name="group"  [formControlName]="item?.name"></p-radioButton>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'textbox'"  style="line-height: 2vh">
-              <textarea [rows]="item?.value?.row" [cols]="item?.value?.col" pInputTextarea [formControlName]="item?.name" [placeholder]="item?.placeholder"></textarea>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'checkbox'"  style="line-height: 2vh">
-              <p-checkbox [label]="i?.label" [name]="i?.name" [value]="i?.value" [formControl]="formContrl.controls[item?.name]" *ngFor="let i of item?.value"></p-checkbox>
-            </div>
-            <div class="ui-g-8" *ngIf="item?.type === 'tree'"  style="line-height: 2vh">
-              <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (click)="dataTreeClick(item?.name, item?.value?.datatree)"/>
+      <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'add'">
+        <div class="ui-g-12">
+          <!--<rbi-form-control [formValue]="form" [formdata]="formdata"></rbi-form-control>-->
+          <div class="form-control" [formGroup]="formContrl" *ngIf="formdata">
+            <div class="ui-g-6" *ngFor="let item of formdata">
+              <div class="ui-g-4">
+                <label [for]="item?.name">{{item.label}}:</label>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'input'" style="line-height: 2vh">
+                <div [hidden]="!item?.disable">
+                  <span *ngIf="formContrl.value[item?.name] !==''"><label style="color: #EDEDED">1</label>{{formContrl.value[item?.name]}}</span>
+                  <span *ngIf="formContrl.value[item?.name] ===''"><label style="color: #EDEDED">1</label>{{item?.placeholder}}</span>
+                  <input type="text" hidden pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (blur)="inputBlur(item?.name)"/>
+                </div>
+                <div [hidden]="item?.disable">
+                  <input type="text"  pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (blur)="inputBlur(item?.name)"/>
+                </div>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'dropdown'"  style="line-height: 2vh">
+                <p-dropdown [id]="item?.name" scrollHeight="100px" [options]="item?.option"  [placeholder]="item?.placeholder" [formControlName]="item?.name" (onChange)="dataChange(item?.name, item?.value, item?.option)"></p-dropdown>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'date'"  style="line-height: 2vh">
+                <p-calendar  [placeholder]="item?.placeholder" [monthNavigator]="true" [yearNavigator]="true" dateFormat="yy/mm/dd"  yearRange="1900:2050" [locale]="esDate"  [formControlName]="item?.name"></p-calendar>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'radio'"  style="line-height: 2vh">
+                <p-radioButton type="radio" label="男"  value="男" name="group"  [formControlName]="item?.name"></p-radioButton>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'textbox'"  style="line-height: 2vh">
+                <textarea [rows]="item?.value?.row" [cols]="item?.value?.col" pInputTextarea [formControlName]="item?.name" [placeholder]="item?.placeholder"></textarea>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'checkbox'"  style="line-height: 2vh">
+                <p-checkbox [label]="i?.label" [name]="i?.name" [value]="i?.value" [formControl]="formContrl.controls[item?.name]" *ngFor="let i of item?.value"></p-checkbox>
+              </div>
+              <div class="ui-g-8" *ngIf="item?.type === 'tree'"  style="line-height: 2vh">
+                <input type="text" pInputText [id]="item?.name" [formControlName]="item?.name"  [placeholder]="item?.placeholder" (click)="dataTreeClick(item?.name, item?.value?.datatree)"/>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'detail'">
-
-    </div>
+      <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'detail'">
+      </div>
     <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix" style="text-align: center">
         <button  class="basic-dialog-btn basic-dialog-btn-sure" (click)="SureClick()">确认</button>

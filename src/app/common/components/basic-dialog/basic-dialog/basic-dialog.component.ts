@@ -10,7 +10,6 @@ import {TreeNode} from '../../../model/shared-model';
 })
 export class BasicDialogComponent implements OnInit, OnChanges {
 
-  public dialog: boolean;
   @Input()
   public dialogOption: DialogModel = new DialogModel();
   @Output()
@@ -38,25 +37,23 @@ export class BasicDialogComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    this.dialog = false;
+    // this.dialog = false;
   }
   // dialog sure
   public  SureClick(): void {
-    console.log(this.formContrl);
-    this.dialog = false;
-    console.log(this.formContrl);
     this.eventClick.emit(this.formContrl);
 
   }
-  // dialg window closed
+  // Close the dialog
   public  CloseClick(): void {
-    this.dialog = false;
+    this.eventClick.emit('false');
   }
+  // Initialization tree structure
   public  dataTreeClick(name, datatree): void {
     this.dataTrees = this.initializeTree(datatree);
     this.treeDialog = true;
   }
-  // 不选择
+  // Tree structure is not selected
   public  treeOnNodeSelect(e): void {
       console.log(e);
   }
@@ -65,17 +62,9 @@ export class BasicDialogComponent implements OnInit, OnChanges {
     this.setData(this.dataTree);
     this.treeDialog = false;
   }
-  //
+  // The life cycle onChanges
   ngOnChanges(changes: SimpleChanges): void {
-    // if (this.dialogOption) {
-      this.dialog = true;
-      // console.log(this.form);
-      console.log(this.formContrl);
-      // this.formContrl = this.form;
-    // }
   }
-
-
   // Tree structure initialization
   public initializeTree(data): any {
     // console.log(oneChild);
@@ -93,7 +82,6 @@ export class BasicDialogComponent implements OnInit, OnChanges {
     }
     return oneChild;
   }
-
   // Set the value in the acquired tree
   public setData(data): void {
     this.flag = this.flag + 1;
@@ -120,12 +108,13 @@ export class BasicDialogComponent implements OnInit, OnChanges {
       }
     }
   }
+  // Input loses focus event
   public  inputBlur(e): void {
       const data = {name: e , value: this.formContrl};
       this.blurClick.emit(data);
   }
+  // Dropdown box change event
   public  dataChange(e, value, option): void {
-    console.log(value);
     let a = {};
     option.forEach(v => {
       if (this.formContrl.value[e] === v.value) {
@@ -133,7 +122,6 @@ export class BasicDialogComponent implements OnInit, OnChanges {
         this.formContrl.patchValue(a);
       }
     });
-    console.log(this.formContrl);
     const data = {name: e , value: this.formContrl};
     this.blurClick.emit(data);
   }

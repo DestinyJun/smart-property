@@ -2,6 +2,7 @@ export class DialogModel {
   type: any; // add/modify/detail
   title: any; // title
   width: any;
+  dialog: boolean;
 }
 export class FromData {
   label?: any; // 名字
@@ -16,6 +17,7 @@ export class FormValue {
   key: any;
   disabled?: any;
   required?: any;
+  value: any;
 }
 export class DataTree {
   code?: any;

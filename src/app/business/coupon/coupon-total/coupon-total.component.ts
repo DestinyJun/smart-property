@@ -41,13 +41,7 @@ export class CouponTotalComponent implements OnInit {
   public formgroup: FormGroup;
   public formdata: any[];
   public nowPage = 1;
-  public SearchOption = {
-    village: [],
-    region: [],
-    building: [],
-    unit: [],
-    room: []
-  };
+  public addChargeCode: any;
   public couponSelectOption: any[] = [];
   public roonCodeSelectOption: any[] = [];
   public couponTypeName: any;
@@ -129,14 +123,13 @@ export class CouponTotalComponent implements OnInit {
     }, 100);
 
     this.couponTotalTableTitleStyle = {background: '#282A31', color: '#DEDEDE', height: '6vh'};
-    this.globalSrv.queryVillageInfo({}).subscribe(
-      (data) => {
-        console.log(data);
-        if (data.status === '1000') {
-          data.data.forEach(v => {
-            this.SearchOption.village.push({label: v.villageName, value: v.villageCode});
-          });
-        }
+    this.couponTotalSrv.queryCouponList({}).subscribe(
+      value => {
+        console.log(value);
+        this.addChargeCode = value.data[0].chargeCode;
+        value.data.forEach(val => {
+          this.couponSelectOption.push({label: val.couponName, value: val.couponCode});
+        });
       }
     );
     this.globalSrv.queryTVillageTree().subscribe(
@@ -146,87 +139,87 @@ export class CouponTotalComponent implements OnInit {
           this.datatree = value.data;
         }
       }
-    )
-  }
-
-  // query region
-  public VillageChange(e): void {
-    this.SearchCoupon.villageCode = '';
-    this.SearchCoupon.regionCode = '';
-    this.SearchCoupon.buildingCode = '';
-    this.SearchCoupon.unitCode = '';
-    for (const searchOptionKey in this.SearchOption) {
-      if (searchOptionKey !== 'village') {
-        this.SearchOption[searchOptionKey] = [];
-      }
-    }
-    // this.SearchCoupon.villageCode = e.value;
-    this.AddcouponTotal.villageName = e.originalEvent.target.innerText;
-    this.globalSrv.queryRegionInfo({villageCode: e.value}).subscribe(
-      (value) => {
-        console.log(value);
-        value.data.forEach(v => {
-          this.SearchOption.region.push({label: v.regionName, value: v.regionCode});
-        });
-      }
     );
   }
 
-  // query building
-  public regionChange(e): void {
-    this.SearchCoupon.regionCode = '';
-    this.SearchCoupon.buildingCode = '';
-    this.SearchCoupon.unitCode = '';
-    this.SearchCoupon.regionCode = e.value;
-    this.SearchOption.building = [];
-    this.SearchOption.unit = [];
-    this.AddcouponTotal.regionName = e.originalEvent.target.innerText;
-    console.log(e.value);
-    this.globalSrv.queryBuilingInfo({regionCode: e.value}).subscribe(
-      (value) => {
-        console.log(value);
-        value.data.forEach(v => {
-          this.SearchOption.building.push({label: v.buildingName, value: v.buildingCode});
-        });
-      }
-    );
-  }
-
-  // query unit
-  public buildingChange(e): void {
-    this.SearchCoupon.buildingCode = '';
-    this.SearchCoupon.unitCode = '';
-    this.SearchOption.unit = [];
-    this.SearchCoupon.buildingCode = e.value;
-    this.SearchOption.room = [];
-    this.AddcouponTotal.buildingName = e.originalEvent.target.innerText;
-    this.globalSrv.queryunitInfo({buildingCode: e.value}).subscribe(
-      (value) => {
-        console.log(value);
-        value.data.forEach(v => {
-          this.SearchOption.unit.push({label: v.unitName, value: v.unitCode});
-        });
-      }
-    );
-  }
-
-  // query roomCode
-  public unitChange(e): void {
-    this.SearchCoupon.unitCode = '';
-    this.SearchCoupon.unitCode = e.value;
-    this.roonCodeSelectOption = [];
-    this.AddcouponTotal.unitName = e.originalEvent.target.innerText;
-
-    this.couponTotalSrv.queryRoomCode({unitCode: e.value}).subscribe(
-      value => {
-        value.data.forEach(v => {
-          this.roonCodeSelectOption.push({label: v.roomCode, value: v.roomCode});
-          this.SearchOption.room.push({label: v.roomCode, value: v.roomCode});
-        });
-      }
-    );
-
-  }
+  // // query region
+  // public VillageChange(e): void {
+  //   this.SearchCoupon.villageCode = '';
+  //   this.SearchCoupon.regionCode = '';
+  //   this.SearchCoupon.buildingCode = '';
+  //   this.SearchCoupon.unitCode = '';
+  //   for (const searchOptionKey in this.SearchOption) {
+  //     if (searchOptionKey !== 'village') {
+  //       this.SearchOption[searchOptionKey] = [];
+  //     }
+  //   }
+  //   // this.SearchCoupon.villageCode = e.value;
+  //   this.AddcouponTotal.villageName = e.originalEvent.target.innerText;
+  //   this.globalSrv.queryRegionInfo({villageCode: e.value}).subscribe(
+  //     (value) => {
+  //       console.log(value);
+  //       value.data.forEach(v => {
+  //         this.SearchOption.region.push({label: v.regionName, value: v.regionCode});
+  //       });
+  //     }
+  //   );
+  // }
+  //
+  // // query building
+  // public regionChange(e): void {
+  //   this.SearchCoupon.regionCode = '';
+  //   this.SearchCoupon.buildingCode = '';
+  //   this.SearchCoupon.unitCode = '';
+  //   this.SearchCoupon.regionCode = e.value;
+  //   this.SearchOption.building = [];
+  //   this.SearchOption.unit = [];
+  //   this.AddcouponTotal.regionName = e.originalEvent.target.innerText;
+  //   console.log(e.value);
+  //   this.globalSrv.queryBuilingInfo({regionCode: e.value}).subscribe(
+  //     (value) => {
+  //       console.log(value);
+  //       value.data.forEach(v => {
+  //         this.SearchOption.building.push({label: v.buildingName, value: v.buildingCode});
+  //       });
+  //     }
+  //   );
+  // }
+  //
+  // // query unit
+  // public buildingChange(e): void {
+  //   this.SearchCoupon.buildingCode = '';
+  //   this.SearchCoupon.unitCode = '';
+  //   this.SearchOption.unit = [];
+  //   this.SearchCoupon.buildingCode = e.value;
+  //   this.SearchOption.room = [];
+  //   this.AddcouponTotal.buildingName = e.originalEvent.target.innerText;
+  //   this.globalSrv.queryunitInfo({buildingCode: e.value}).subscribe(
+  //     (value) => {
+  //       console.log(value);
+  //       value.data.forEach(v => {
+  //         this.SearchOption.unit.push({label: v.unitName, value: v.unitCode});
+  //       });
+  //     }
+  //   );
+  // }
+  //
+  // // query roomCode
+  // public unitChange(e): void {
+  //   this.SearchCoupon.unitCode = '';
+  //   this.SearchCoupon.unitCode = e.value;
+  //   this.roonCodeSelectOption = [];
+  //   this.AddcouponTotal.unitName = e.originalEvent.target.innerText;
+  //
+  //   this.couponTotalSrv.queryRoomCode({unitCode: e.value}).subscribe(
+  //     value => {
+  //       value.data.forEach(v => {
+  //         this.roonCodeSelectOption.push({label: v.roomCode, value: v.roomCode});
+  //         this.SearchOption.room.push({label: v.roomCode, value: v.roomCode});
+  //       });
+  //     }
+  //   );
+  //
+  // }
 
   // condition search click
   public couponTotalSearchClick(): void {
@@ -258,52 +251,37 @@ export class CouponTotalComponent implements OnInit {
 
   // add coupon
   public couponTotalAddClick(): void {
-    this.couponSelectOption = [];
-    this.couponTotalSrv.queryCouponList({}).subscribe(
-      value => {
-        value.data.forEach(val => {
-          this.couponSelectOption.push({label: val.couponName, value: val.couponCode});
-        });
-      }
-    );
+
     this.optionDialog = {
       type: 'add',
       title: '添加信息',
       width: '800',
+      dialog: true
 
     };
 
     const list = ['villageCode', 'villageName', 'regionCode', 'regionName', 'buildingCode', 'buildingName', 'unitCode', 'unitName',
       'roomCode', 'couponCode', 'couponName', 'userId', 'surname', 'mobilePhone', 'money', 'effectiveTime', 'couponType',
       'remarks', 'chargeCode'];
-    list.forEach(value => {
-      if (value === 'surname' || value === 'effectiveTime' ||  value === 'money' || value === 'couponType') {
-        this.form.push({key: value, disabled: false, required: true});
+    list.forEach(val => {
+     if (val === 'chargeCode') {
+        this.form.push({key: val, disabled: false, required: true, value: this.addChargeCode});
       } else {
-        this.form.push({key: value, disabled: false, required: true});
+        this.form.push({key: val, disabled: false, required: true, value: ''});
       }
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     console.log(this.formgroup.value);
     this.formdata = [
-    {label: '房间号', type: 'tree', name: 'roomCode', option: '', placeholder: '请选择房间', value: {datatree: this.datatree}},
-    // {label: '小区名称', type: 'dropdown', name: 'villageCode', option: this.SearchOption.village, placeholder: '请选择小区', value: ''},
-    // {label: '地块名称', type: 'dropdown', name: 'regionCode', option: this.SearchOption.region, placeholder: '请选择地块名称', value: ''},
-    // {label: '楼宇名称', type: 'dropdown', name: 'buildingCode', option: this.SearchOption.building, placeholder: '请选择楼栋名称', value: ''},
-    // {label: '单元名称', type: 'dropdown', name: 'unitCode', option: this.SearchOption.unit, placeholder: '请选择单元名称', value: ''},
-    // {label: '房间编号', type: 'dropdown', name: 'roomCode', option: this.roonCodeSelectOption, placeholder: '请选择房屋编号', value: ''},
     {label: '客户电话', type: 'input', name: 'mobilePhone', option: '', placeholder: '请输入客户电话..'},
+    {label: '房间号', type: 'tree', name: 'roomCode', option: '', placeholder: '请选择房间', value: {datatree: this.datatree}},
     {label: '客户名称', type: 'input', name: 'surname', option: '', placeholder: '请输入客户名称..', disable: true},
     {label: '优惠卷', type: 'dropdown', name: 'couponCode', option: this.couponSelectOption, placeholder: '请选择优惠卷..', value: 'couponName'},
-    {label: '优惠金额', type: 'input', name: 'money', option: '', placeholder: '请输入优惠金额..'},
-    {label: '有效时长', type: 'input', name: 'effectiveTime', option: '', placeholder: '请输入有效时长..'},
-    {label: '优惠卷类型', type: 'input', name: 'couponType', option: '', placeholder: '请输入优惠卷类型..'},
+    {label: '优惠金额', type: 'input', name: 'money', option: '', placeholder: '请输入优惠金额..', disable: true},
+    {label: '有效时长', type: 'input', name: 'effectiveTime', option: '', placeholder: '请输入有效时长..', disable: true},
+    {label: '优惠卷类型', type: 'input', name: 'couponType', option: '', placeholder: '请输入优惠卷类型..', disable: true},
     {label: '备注', type: 'textbox', name: 'remarks', option: '', placeholder: '备注..', value: {row: 2, col: 6}},
-    // {label: ''},
-  ];
-    // this.couponTotalAddDialog = true;
-    // this.couponTotalAddDialog = true;
-    // console.log('这里是添加信息');
+   ];
   }
 
   // // search userInfo
@@ -360,7 +338,7 @@ export class CouponTotalComponent implements OnInit {
           if (value.status === '1000') {
             this.toolSrv.setToast('success', '操作成功', value.message);
             this.couponTotalInitialization();
-            this.couponTotalAddDialog = false;
+            this.optionDialog.dialog = false;
             this.clearData();
           } else {
             this.toolSrv.setToast('error', '增加失败', value.message);
@@ -453,20 +431,20 @@ export class CouponTotalComponent implements OnInit {
     this.couponTypeName = null;
     this.couponMoney = null;
     this.couponEffectiveTime = null;
-    this.SearchOption = {village: [], region: [], building: [], unit: [], room: []};
+    // this.SearchOption = {village: [], region: [], building: [], unit: [], room: []};
     this.couponSelectOption = [];
     this.roonCodeSelectOption = [];
   }
 
   public eventClick(e): void {
-    if (e.roomCode !== undefined) {
-      for (const eKey in e) {
-        const a = eKey;
-        this.AddcouponTotal[a] = e[eKey];
-      }
-      console.log(this.AddcouponTotal);
+    if (e === 'false') {
+      this.optionDialog.dialog = false;
     } else {
-      console.log(e);
+    for (const eKey in e.value) {
+      const a = eKey;
+      this.AddcouponTotal[a] = e.value[eKey];
+      }
+    this.couponTotalAddSureClick();
     }
   }
 
@@ -491,7 +469,6 @@ export class CouponTotalComponent implements OnInit {
               val.data.forEach(v => {
                 if (value.data.couponType === v.settingCode) {
                   this.formgroup.patchValue({couponType: v.settingName});
-                  console.log(this.formgroup);
                 }
               });
 

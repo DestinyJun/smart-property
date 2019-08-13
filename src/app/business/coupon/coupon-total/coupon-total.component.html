@@ -19,16 +19,16 @@
         <span>删 除</span>
       </div>
       <div style="margin-top: 4.5vh;font-size: 0.875rem;margin-left: 1vw">
-        <label style="color: #fff;margin-left: 0.5vw" >小区：</label>
-        <p-dropdown [options]="SearchOption.village" scrollHeight="100px" placeholder="请选择小区..." (onChange)="VillageChange($event)"></p-dropdown>
-        <label style="color: #fff;margin-left: 0.5vw">地块：</label>
-        <p-dropdown [options]="SearchOption.region" scrollHeight="100px" placeholder="请选择地块..." (onChange)="regionChange($event)"></p-dropdown>
-        <label style="color: #fff;margin-left: 0.5vw">楼栋：</label>
-        <p-dropdown [options]="SearchOption.building" scrollHeight="100px" placeholder="请选择楼栋..." (onChange)="buildingChange($event)"></p-dropdown>
-        <label style="color: #fff;margin-left: 0.5vw">单元：</label>
-        <p-dropdown [options]="SearchOption.unit"  scrollHeight="100px" placeholder="请选择单元..." (onChange)="unitChange($event)"></p-dropdown>
-        <label style="color: #fff;margin-left: 0.5vw">单元：</label>
-        <p-dropdown [options]="SearchOption.room"  scrollHeight="100px" placeholder="请选择房间..." [(ngModel)]="SearchCoupon.roomCode"></p-dropdown>
+        <!--<label style="color: #fff;margin-left: 0.5vw" >小区：</label>-->
+        <!--<p-dropdown [options]="SearchOption.village" scrollHeight="100px" placeholder="请选择小区..." (onChange)="VillageChange($event)"></p-dropdown>-->
+        <!--<label style="color: #fff;margin-left: 0.5vw">地块：</label>-->
+        <!--<p-dropdown [options]="SearchOption.region" scrollHeight="100px" placeholder="请选择地块..." (onChange)="regionChange($event)"></p-dropdown>-->
+        <!--<label style="color: #fff;margin-left: 0.5vw">楼栋：</label>-->
+        <!--<p-dropdown [options]="SearchOption.building" scrollHeight="100px" placeholder="请选择楼栋..." (onChange)="buildingChange($event)"></p-dropdown>-->
+        <!--<label style="color: #fff;margin-left: 0.5vw">单元：</label>-->
+        <!--<p-dropdown [options]="SearchOption.unit"  scrollHeight="100px" placeholder="请选择单元..." (onChange)="unitChange($event)"></p-dropdown>-->
+        <!--<label style="color: #fff;margin-left: 0.5vw">单元：</label>-->
+        <!--<p-dropdown [options]="SearchOption.room"  scrollHeight="100px" placeholder="请选择房间..." [(ngModel)]="SearchCoupon.roomCode"></p-dropdown>-->
       </div>
     </div>
     <!--//搜索-->
@@ -79,115 +79,6 @@
     </p-scrollPanel>
 
   </div>
-  <!--增加弹窗-->
-  <p-dialog header="优惠卷信息添加" [(visible)]="couponTotalAddDialog" [width]="800">
-    <!--Content-->
-    <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'4vh'}">
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label >小区名称：</label>
-        </div>
-        <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px"  [options]="SearchOption.village" placeholder="请选择小区.."  (onChange)="VillageChange($event)"  [(ngModel)]="AddcouponTotal.villageCode"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label >地块名称：</label>
-        </div>
-        <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px" [options]="SearchOption.region"  placeholder="请选择楼宇.." (onChange)="regionChange($event)"  [(ngModel)]="AddcouponTotal.regionCode"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label >楼宇名称：</label>
-        </div>
-        <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px"  [options]="SearchOption.building" placeholder="请选择楼宇.."  (onChange)="buildingChange($event)" [(ngModel)]="AddcouponTotal.buildingCode"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label >单元名称：</label>
-        </div>
-        <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px"  [options]="SearchOption.unit" placeholder="请选择单元.." (onChange)="unitChange($event)" [(ngModel)]="AddcouponTotal.unitCode"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addroomCode">房间编号：</label>
-        </div>
-        <div class="ui-g-8" [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown id="addroomCode"  scrollHeight="100px"  [options]="roonCodeSelectOption" placeholder="请选择房间编号.." [(ngModel)]="AddcouponTotal.roomCode"></p-dropdown>
-          <!--<input id="addroomCode" type="text" pInputText placeholder="请输入房间代码.." [(ngModel)]="AddcouponTotal.roomCode" (blur)="getUserInfo()">-->
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addmobilePhone">客户电话：</label>
-        </div>
-        <div class="ui-g-8">
-          <input id="addmobilePhone" type="text" pInputText placeholder="请输入客户电话.." [(ngModel)]="AddcouponTotal.mobilePhone" (blur)="getUserInfo()">
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addbclientName">客户名称：</label>
-        </div>
-        <div class="ui-g-8">
-          <input id="addbclientName" disabled type="text" pInputText placeholder="请输入客户名称.." [(ngModel)]="AddcouponTotal.surname">
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label >优惠卷：</label>
-        </div>
-        <div class="ui-g-8"  [ngStyle]="{'line-height':'2vh'}">
-          <p-dropdown scrollHeight="100px"  [options]="couponSelectOption" placeholder="请选择优惠卷.." (onChange)="couponSelectChange($event)" [(ngModel)]="AddcouponTotal.couponCode"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addcouponAmount">优惠金额：</label>
-        </div>
-        <div class="ui-g-8">
-          <input id="addcouponAmount"  disabled type="text" pInputText placeholder="请输入优惠金额.." [(ngModel)]="couponMoney">
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addDeductedPropertyAmount">有效时长：</label>
-        </div>
-        <div class="ui-g-8">
-          <input id="addDeductedPropertyAmount" disabled type="text" pInputText placeholder="请输入抵扣物业费金额.." [(ngModel)]="couponEffectiveTime">
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addbalanceAmount">优惠卷类型：</label>
-        </div>
-        <div class="ui-g-8">
-          <input id="addbalanceAmount" type="text" disabled pInputText placeholder="请输入转入余额金额..." [(ngModel)]="couponTypeName">
-        </div>
-      </div>
-      <div class="ui-g-6">
-        <div class="ui-g-4">
-          <label for="addbalanceAmount">备注：</label>
-        </div>
-        <div class="ui-g-8">
-          <textarea  type="text" pInputText placeholder="备注..." [(ngModel)]="AddcouponTotal.remarks"></textarea>
-        </div>
-      </div>
-    </div>
-    <p-footer>
-      <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <button class="coupon-total-dialog-Btn coupon-total-dialog-Btn-sure" (click)="couponTotalAddSureClick()">确认</button>
-        <button class="coupon-total-dialog-Btn coupon-total-dialog-Btn-false" (click)="couponTotalAddDialog=false; clearData();couponTotalInitialization()">取消</button>
-      </div>
-    </p-footer>
-  </p-dialog>
 
   <!--详情弹窗-->
   <p-dialog header="详细信息" [(visible)]="couponTotalDetailDialog" [width]="900">
