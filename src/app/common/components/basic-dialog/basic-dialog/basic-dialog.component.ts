@@ -20,9 +20,12 @@ export class BasicDialogComponent implements OnInit, OnChanges {
   public formContrl: FormGroup;
   @Input()
   public formdata: FromData[];
+  @Input()
+  public treeData: any;
   public dataTrees: DataTree[];
   public dataTree: DataTree = new DataTree();
   public treeDialog: boolean;
+  public disable = true;
   public flag = 0;
   public esDate = {
     firstDayOfWeek: 0,
@@ -44,13 +47,19 @@ export class BasicDialogComponent implements OnInit, OnChanges {
     this.eventClick.emit(this.formContrl);
 
   }
+  public  inputData(): void {
+      this.treeData = undefined;
+  }
   // Close the dialog
   public  CloseClick(): void {
     this.eventClick.emit('false');
+    this.flag = 0;
+    this.treeData = undefined;
   }
   // Initialization tree structure
-  public  dataTreeClick(name, datatree): void {
-    this.dataTrees = this.initializeTree(datatree);
+  public  dataTreeClick(): void {
+    this.dataTrees = this.initializeTree(this.treeData);
+    // console.log(this.dataTrees);
     this.treeDialog = true;
   }
   // Tree structure is not selected
@@ -59,11 +68,16 @@ export class BasicDialogComponent implements OnInit, OnChanges {
   }
   // Confirm selected data
   public  dataTreeSureClick(): void {
+    console.log(234);
     this.setData(this.dataTree);
     this.treeDialog = false;
+    this.flag = 0;
   }
   // The life cycle onChanges
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.treeData) {
+      this.disable = true;
+    }
   }
   // Tree structure initialization
   public initializeTree(data): any {

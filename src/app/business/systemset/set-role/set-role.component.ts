@@ -135,7 +135,7 @@ export class SetRoleComponent implements OnInit {
           this.roleSrv.deleteUserInfo({ids: this.ids.join(',')}).subscribe(
             (value) => {
               this.loadHidden = true;
-              this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+              this.toolSrv.setQuestJudgment(value.status,  value.message, () => {
                 this.roleInitialization();
                 this.roleAddDialog = false;
                 this.roleSelect = [];
@@ -168,7 +168,7 @@ export class SetRoleComponent implements OnInit {
         this.roleSrv.deleteUserInfo({ids: this.ids.join(',')}).subscribe(
           (value) => {
             this.loadHidden = true;
-            this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+            this.toolSrv.setQuestJudgment(value.status,  value.message, () => {
               this.roleInitialization();
               this.roleSelect = [];
             });
@@ -213,7 +213,7 @@ export class SetRoleComponent implements OnInit {
     this.roleSrv.queryRoleList({pageNo: event, pageSize: 10}).subscribe(
       (value) => {
         this.loadHidden = true;
-        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+        this.toolSrv.setQuestJudgment(value.status,  value.message, () => {
           this.setTableData(value.data.contents);
           this.option = {total: value.data.totalRecord, row: value.data.pageSize, nowpage: value.data.pageNo};
         });

@@ -23,8 +23,4 @@ export class BfParkingSpaceService {
   public  daleteParkingSpace(pamars): Observable<any> {
     return this.http.post(environment.chargeUrl +  `/parkingSpace/deleteByIds`, pamars);
   }
-  public  queryParkSpaceNatureStatus(body): Observable<any> {
-    return  this.http.post(environment.sysetUrl + '/setting/findNativeChoose', body);
-  }
-
 }

@@ -84,12 +84,8 @@ export class ChargeItemDetail {
   lastReading?: any; // 上次读数
 }
 export  class SearchData {
-  villageCode: any;
-  unitCode: any;
-  regionCode: any;
-  buildingCode: any;
-  roomCode: any;
   pageNo: any;
   pageSize: any;
   mobilePhone: any;
+  roomCode: any;
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormControlComponent } from './form-control.component';
+import { FilePopComponent } from './file-pop.component';
 
-describe('FormControlComponent', () => {
-  let component: FormControlComponent;
-  let fixture: ComponentFixture<FormControlComponent>;
+describe('FilePopComponent', () => {
+  let component: FilePopComponent;
+  let fixture: ComponentFixture<FilePopComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormControlComponent ]
+      declarations: [ FilePopComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormControlComponent);
+    fixture = TestBed.createComponent(FilePopComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

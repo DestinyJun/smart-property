@@ -109,6 +109,17 @@ export class PublicMethedService {
        } else {
          this.setToast('error', '操作失败', message);
        }
+       // switch (status) {
+       //   case '1000': this.setToast('success', '操作成功', '请求成功'); callback(); break;
+       //   case '1001': this.setToast('error', '请求失败', '请求参数不能为空'); break;
+       //   case '1002': this.setToast('error', '请求失败', '服务器处理失败'); break;
+       //   case '1003': this.setToast('error', '请求失败', '拒绝访问'); break;
+       //   case '1004': this.setToast('error', '请求失败', '用户名或密码错误'); break;
+       //   case '1005': this.setToast('error', '请求失败', '用户名不存在'); break;
+       //   case '1006': this.setToast('error', '请求失败', '第三方处理失败'); break;
+       //   case '1007': this.setToast('error', '请求失败', '服务器未响应'); break;
+       //   case '1008': this.setToast('error', '请求失败', '原始密码不匹配'); break;
+       // }
   }
   /**
    * get Admin Status
@@ -157,11 +168,12 @@ export class PublicMethedService {
        if (status !== undefined && status !== '') {
          if (status.toString() === v.settingCode) {
            this.dataName = v.settingName;
+           callback(this.dataList, this.dataName);
          }
+         // if (list.indexOf(v) === list.length - 1) {
+         //
+         // }
        }
-       if (list.indexOf(v) === list.length - 1) {
-          callback(this.dataList, this.dataName);
-        }
      });
   }
 

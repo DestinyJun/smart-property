@@ -15,6 +15,7 @@ export class CheckTableBtnComponent implements OnInit, OnChanges {
   public selectData =  new EventEmitter<number>();
   @Input()
   public select: any;
+  public btncolor: any;
   constructor() { }
 
   ngOnInit() {
@@ -24,6 +25,7 @@ export class CheckTableBtnComponent implements OnInit, OnChanges {
     if (this.option) {
       console.log(this.option);
     }
+    // this.btncolor = {background: this.option.}
   }
   public  DetailClick(e): void {
       this.detail.emit(e);

@@ -2,17 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   CalendarModule, CheckboxModule,
-  DialogModule, DropdownModule, InputTextareaModule, InputTextModule, RadioButtonModule, ScrollPanelModule, TreeModule,
+  DialogModule, DropdownModule, FileUploadModule, InputTextareaModule, InputTextModule, RadioButtonModule, ScrollPanelModule, TreeModule,
 } from 'primeng/primeng';
 import {BasicDialogComponent} from './basic-dialog/basic-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import { FormControlComponent } from './form-control/form-control.component';
+import {DetailPopComponent} from './detail-pop/detail-pop.component';
+import {FilePopComponent} from './file-pop/file-pop.component';
+import {BasicTableModule} from '../basic-table/basic-table.module';
+
 
 
 @NgModule({
   declarations: [
     BasicDialogComponent,
-    FormControlComponent],
+    DetailPopComponent,
+    FilePopComponent],
   imports: [
     CommonModule,
     DialogModule,
@@ -25,7 +29,9 @@ import { FormControlComponent } from './form-control/form-control.component';
     InputTextareaModule,
     TreeModule,
     ScrollPanelModule,
+    BasicTableModule,
+    FileUploadModule,
   ],
-  exports: [BasicDialogComponent]
+  exports: [BasicDialogComponent, DetailPopComponent, FilePopComponent]
 })
 export class BasicDialogModule { }

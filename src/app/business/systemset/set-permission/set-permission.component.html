@@ -28,7 +28,7 @@
   </div>
   <!--表格-->
   <div class="set-permission-table">
-    <rbi-check-table-btn [option]="optionTable" (selectData)="getSelectData($event)" [select]="permissionSelect"></rbi-check-table-btn>
+    <rbi-check-table-btn [option]="optionTable"  [select]="permissionSelect"></rbi-check-table-btn>
   </div>
   <!--增加弹窗-->
   <p-dialog header="信息添加" [(visible)]="permissionAddDialog"  [width]="800" (onHide)="permissionAddCloseClick()">

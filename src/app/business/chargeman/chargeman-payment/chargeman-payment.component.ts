@@ -54,6 +54,11 @@ export class ChargemanPaymentComponent implements OnInit {
     unit: [],
     room: [],
   };
+  public searchOption = [
+    {label: '手机号', value: '1'},
+    {label: '房间号', value: '2'},
+  ];
+  public searchType: any;
   public SearchData: SearchData = new SearchData();
   // 缴费相关
   public projectSelectDialog: boolean;
@@ -137,9 +142,13 @@ export class ChargemanPaymentComponent implements OnInit {
   }
   // condition search click
   public  paymentSearchClick(): void {
-    if (this.SearchData.buildingCode !== '') {
+    if (this.searchType === undefined) {
+      this.searchType = 1;
+    }
+    if (this.searchType === 1) {
       this.SearchData.pageNo = 1;
       this.SearchData.pageSize = 10;
+      this.SearchData.mobilePhone = this.searchType;
       // @ts-ignore
       this.loadHidden = false;
       this.paymentSrv.searchPaymentData(this.SearchData).subscribe(
@@ -159,13 +168,30 @@ export class ChargemanPaymentComponent implements OnInit {
         }
       );
     } else {
-      this.toolSrv.setToast('error', '搜索失败', '搜索信息条件请具体到楼栋');
+      this.SearchData.pageNo = 1;
+      this.SearchData.pageSize = 10;
+      this.SearchData.roomCode = this.searchType;
+      // @ts-ignore
+      this.loadHidden = false;
+      this.paymentSrv.searchPaymentData(this.SearchData).subscribe(
+        value => {
+          if (value.status === '1000') {
+            this.loadHidden = true;
+            if (value.data.contents) {
+              this.toolSrv.setToast('success', '搜索成功', value.message);
+              this.paymentTableContent = value.data.contents;
+            } else {
+              this.toolSrv.setToast('success', '搜索成功', '数据为空');
+            }
+          } else {
+            this.toolSrv.setToast('error', '搜索失败', value.message);
 
+          }
+        }
+      );
     }
-
-    console.log('这里是条件搜索');
   }
-  // select village
+/*  // select village
   public  VillageChange(e): void {
     // console.log(this.test);
     this.SearchOption.building = [];
@@ -226,7 +252,7 @@ export class ChargemanPaymentComponent implements OnInit {
         });
       }
     );
-  }
+  }*/
   // sure selectPreject payment
   public  paymentProjectSureClick(): void {
     let monthStatus = true;

@@ -16,7 +16,7 @@ import {FormGroup} from '@angular/forms';
 export class CouponTotalComponent implements OnInit {
 
 
-  @ViewChild('input', {static: true}) input: Input;
+  // @ViewChild('input', {static: true}) input: Input;
   // @ViewChild('file') file: Input;
   public couponTotalTableTitle: any;
   public couponTotalTableContent: CouponTotal[];
@@ -50,6 +50,7 @@ export class CouponTotalComponent implements OnInit {
   public pastDueOption: any[] = [];
   public auditStatusOption: any[] = [];
   public datatree: any;
+  public roomtree: any;
   public optionDialog: DialogModel = new DialogModel();
 
   // public msgs: Message[] = []; // 消息弹窗
@@ -97,6 +98,7 @@ export class CouponTotalComponent implements OnInit {
       if (this.pastDueOption.length > 0 && this.auditStatusOption.length > 0) {
         this.couponTotalSrv.queryCouponPageData({pageNo: this.nowPage, pageSize: 10}).subscribe(
           (value) => {
+            console.log(value);
             this.loadingHide = true;
             clearInterval(page);
             if (value.status === '1000') {
@@ -125,7 +127,7 @@ export class CouponTotalComponent implements OnInit {
     this.couponTotalTableTitleStyle = {background: '#282A31', color: '#DEDEDE', height: '6vh'};
     this.couponTotalSrv.queryCouponList({}).subscribe(
       value => {
-        console.log(value);
+        // console.log(value);
         this.addChargeCode = value.data[0].chargeCode;
         value.data.forEach(val => {
           this.couponSelectOption.push({label: val.couponName, value: val.couponCode});
@@ -259,7 +261,6 @@ export class CouponTotalComponent implements OnInit {
       dialog: true
 
     };
-
     const list = ['villageCode', 'villageName', 'regionCode', 'regionName', 'buildingCode', 'buildingName', 'unitCode', 'unitName',
       'roomCode', 'couponCode', 'couponName', 'userId', 'surname', 'mobilePhone', 'money', 'effectiveTime', 'couponType',
       'remarks', 'chargeCode'];
@@ -271,10 +272,9 @@ export class CouponTotalComponent implements OnInit {
       }
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
-    console.log(this.formgroup.value);
     this.formdata = [
     {label: '客户电话', type: 'input', name: 'mobilePhone', option: '', placeholder: '请输入客户电话..'},
-    {label: '房间号', type: 'tree', name: 'roomCode', option: '', placeholder: '请选择房间', value: {datatree: this.datatree}},
+    {label: '房间号', type: 'tree', name: 'roomCode', option: '', placeholder: '请选择房间'},
     {label: '客户名称', type: 'input', name: 'surname', option: '', placeholder: '请输入客户名称..', disable: true},
     {label: '优惠卷', type: 'dropdown', name: 'couponCode', option: this.couponSelectOption, placeholder: '请选择优惠卷..', value: 'couponName'},
     {label: '优惠金额', type: 'input', name: 'money', option: '', placeholder: '请输入优惠金额..', disable: true},
@@ -449,33 +449,42 @@ export class CouponTotalComponent implements OnInit {
   }
 
   public blurClick(e): void {
-    this.formgroup = e.value;
-    if (e.name === 'mobilePhone') {
-      this.couponTotalSrv.queryCouponUserInfo({mobilePhone: this.formgroup.value[e.name]}).subscribe(
-        value => {
-          if (value.status === '1000') {
-            if (value.data.customerInfoDO) {
-              this.formgroup.patchValue({surname: value.data.customerInfoDO.surname, userId: value.data.customerInfoDO.userId});
+    console.log(e);
+    if ( this.formgroup.value[e.name] !== '') {
+      this.formgroup = e.value;
+      if (e.name === 'mobilePhone') {
+        this.couponTotalSrv.queryCouponUserInfo({mobilePhone: this.formgroup.value[e.name]}).subscribe(
+          value => {
+            if (value.status === '1000') {
+              console.log(value);
+              this.roomtree = value.data.roomTree;
+              console.log(this.roomtree);
+              if (value.data.customerInfoDO) {
+                this.formgroup.patchValue({surname: value.data.customerInfoDO.surname, userId: value.data.customerInfoDO.userId});
+              }
             }
           }
-        }
-      );
-    } else if (e.name === 'couponCode') {
-      this.couponTotalSrv.queryCouponInfo({couponCode: this.formgroup.value.couponCode}).subscribe(
-        value => {
-          this.formgroup.patchValue({effectiveTime: value.data.effectiveTime, money: value.data.money});
-          this.couponTotalSrv.queryCouponType({}).subscribe(
-            val => {
-              val.data.forEach(v => {
-                if (value.data.couponType === v.settingCode) {
-                  this.formgroup.patchValue({couponType: v.settingName});
-                }
-              });
+        );
+      } else if (e.name === 'couponCode') {
+        this.couponTotalSrv.queryCouponInfo({couponCode: this.formgroup.value.couponCode}).subscribe(
+          value => {
+            this.formgroup.patchValue({effectiveTime: value.data.effectiveTime, money: value.data.money});
+            this.couponTotalSrv.queryCouponType({}).subscribe(
+              val => {
+                val.data.forEach(v => {
+                  if (value.data.couponType === v.settingCode) {
+                    this.formgroup.patchValue({couponType: v.settingName});
+                  }
+                });
 
-            }
-          );
-        }
-      );
+              }
+            );
+          }
+        );
+      }
+    }else {
+      this.toolSrv.setToast('error', '操作错误', '请输入合法的电话号码');
     }
   }
+
 }
