@@ -1,0 +1,15 @@
+<div class="basic-btn" *ngIf="btnOption">
+  <div class=" ui-g-12">
+    <div class="ui-g-1 basic-btn-header-btn basic-btn-header-btn-add" (click)="eventClick(item.label)" *ngFor="let item of btnOption.btnlist">
+      <img class="basic-btn-header-img-add" [src]="item?.src" alt="">
+      <span>{{item?.label}}</span>
+    </div>
+  </div>
+  <!--//搜索-->
+  <div class="ui-inputgroup basic-btn-header-search" [hidden]="btnOption?.searchHidden">
+    <label style="color: #fff;margin-top: 0.5vh">搜索方式：</label>
+    <p-dropdown [options]="searchOption"   scrollHeight="100px"  [(ngModel)]="searchType" [style]="{'width':'8vw','margin-right':'2vw'}"></p-dropdown>
+    <input type="text" pInputText placeholder="请输入电话或房间号" style="width: 7vw" [(ngModel)]="serchData">
+    <button id="disabled-btn" class="basic-btn-header-btn-search" type="button"  (click)="SearchClick()"  label="搜索">搜索</button>
+  </div>
+</div>

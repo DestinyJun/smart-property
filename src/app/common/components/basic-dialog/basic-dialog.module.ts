@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {DetailPopComponent} from './detail-pop/detail-pop.component';
 import {FilePopComponent} from './file-pop/file-pop.component';
 import {BasicTableModule} from '../basic-table/basic-table.module';
+import {UploadFileRecordComponent} from './upload-file-record/upload-file-record.component';
 
 
 
@@ -16,7 +17,8 @@ import {BasicTableModule} from '../basic-table/basic-table.module';
   declarations: [
     BasicDialogComponent,
     DetailPopComponent,
-    FilePopComponent],
+    FilePopComponent,
+   UploadFileRecordComponent],
   imports: [
     CommonModule,
     DialogModule,
@@ -32,6 +34,6 @@ import {BasicTableModule} from '../basic-table/basic-table.module';
     BasicTableModule,
     FileUploadModule,
   ],
-  exports: [BasicDialogComponent, DetailPopComponent, FilePopComponent]
+  exports: [BasicDialogComponent, DetailPopComponent, FilePopComponent, UploadFileRecordComponent]
 })
 export class BasicDialogModule { }
